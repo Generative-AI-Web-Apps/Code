@@ -1,17 +1,16 @@
-import React from "react";
-import { Textarea } from "@/components/ui/textarea";
-import ChatList from "@/components/chat/ChatList";
-import useEnterSubmit from "@/hooks/use-enter-submit";
-import AutoScroll from "@/components/AutoScroll";
-import useFocusOnSlashPress from "@/hooks/use-focus-on-slash-press";
-import useChatFormSubmit from "@/hooks/use-chat-form-submit";
-import { getAssistantResponse } from "@/lib/getAssistantResponse";
+import React from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import ChatList from '@/components/chat/ChatList';
+import useEnterSubmit from '@/hooks/use-enter-submit';
+import AutoScroll from '@/components/AutoScroll';
+import useFocusOnSlashPress from '@/hooks/use-focus-on-slash-press';
+import useChatFormSubmit from '@/hooks/use-chat-form-submit';
+import { getAssistantResponse } from '@/lib/getAssistantResponse';
 
 const ChatPage = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
-  const { messages, isLoading, handleSubmit, inputValue, setInputValue } =
-    useChatFormSubmit(getAssistantResponse);
+  const { messages, isLoading, handleSubmit, inputValue, setInputValue } = useChatFormSubmit(getAssistantResponse);
   const onInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -24,9 +23,7 @@ const ChatPage = () => {
           <span className="text-gray-400">Ask me anything you want</span>
         </h1>
       )}
-      {messages.length > 0 && (
-        <ChatList messages={messages} isLoading={isLoading} />
-      )}
+      {messages.length > 0 && <ChatList messages={messages} isLoading={isLoading} />}
       <form
         className="stretch max-w-4xl flex flex-row"
         ref={formRef}

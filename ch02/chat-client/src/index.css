@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --text-color: #374150;
-    --font-sans: "Inter", sans-serif;
+    --font-sans: 'Inter', sans-serif;
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
 

@@ -1,5 +1,5 @@
-import ChatBubble from "./ChatBubble";
-import ChatBubbleLoading from "./ChatBubbleLoading";
+import ChatBubble from './ChatBubble';
+import ChatBubbleLoading from './ChatBubbleLoading';
 
 const ChatList = ({ messages, isLoading }) => {
   return (
@@ -9,7 +9,7 @@ const ChatList = ({ messages, isLoading }) => {
           <ChatBubble
             role={message.role}
             text={message.content}
-            className={`${message.role === "assistant" ? "mr-auto" : "ml-auto"} border-none`}
+            className={`${message.role === 'assistant' ? 'mr-auto' : 'ml-auto'} border-none`}
           />
         </li>
       ))}

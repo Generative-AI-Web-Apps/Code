@@ -1,7 +1,7 @@
-import "./index.css";
+import './index.css';
 
 export const metadata = {
-  title: "Astra AI",
+  title: 'Astra AI',
   description: "Hello, I'm ✴️ Astra. Ask me anything you want.",
 };
 

@@ -1,14 +1,10 @@
-"use client";
-import { useRef } from "react";
+'use client';
+import { useRef } from 'react';
 
 function useEnterSubmit() {
   const formRef = useRef(null);
   const handleKeyDown = (event) => {
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey &&
-      !event.nativeEvent.isComposing
-    ) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
       formRef.current?.requestSubmit();
       event.preventDefault();
     }

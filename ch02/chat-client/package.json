@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "start": "concurrently \"npm run server\" \"npm run dev\"",
     "test:unit": "vitest -c vitest.unit.config.ts",
-    "test:e2e": "vitest -c vitest.e2e.config.ts"
+    "test:e2e": "vitest -c vitest.e2e.config.ts",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",

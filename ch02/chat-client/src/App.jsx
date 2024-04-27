@@ -1,5 +1,5 @@
-import AppLayout from "./layout/AppLayout";
-import ChatPage from "./pages/ChatPage";
+import AppLayout from './layout/AppLayout';
+import ChatPage from './pages/ChatPage';
 
 function App() {
   return (

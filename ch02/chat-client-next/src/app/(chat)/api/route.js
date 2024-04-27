@@ -1,9 +1,9 @@
-import OpenAI from "openai";
+import OpenAI from 'openai';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "",
+  apiKey: process.env.OPENAI_API_KEY || '',
 });
 
 export async function POST(req) {
@@ -13,13 +13,12 @@ export async function POST(req) {
     .create({
       messages: [
         {
-          role: "system",
-          content:
-            "I'm happy to assist you in any way I can. How can I be of service today?",
+          role: 'system',
+          content: "I'm happy to assist you in any way I can. How can I be of service today?",
         },
-        { role: "user", content: text },
+        { role: 'user', content: text },
       ],
-      model: "gpt-3.5-turbo",
+      model: 'gpt-3.5-turbo',
       stop: null, // Remove stop sequences for chat-like responses
       max_tokens: 150,
     })
@@ -27,7 +26,7 @@ export async function POST(req) {
   const message = {
     id: completion.id, // Include ID
     created: completion.created,
-    role: "assistant",
+    role: 'assistant',
     content: completion.choices[0].message.content, // Extract content from message
   };
   return Response.json({ message });

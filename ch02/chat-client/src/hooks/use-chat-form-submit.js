@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { generateUniqueId } from "@/lib/generateUniqueId";
+import { useState } from 'react';
+import { generateUniqueId } from '@/lib/generateUniqueId';
 
 function useChatFormSubmit(getAssistantResponse) {
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -12,11 +12,11 @@ function useChatFormSubmit(getAssistantResponse) {
     if (!value) return;
 
     setIsLoading(true);
-    setInputValue("");
+    setInputValue('');
 
     const userMessage = {
       content: value,
-      role: "user",
+      role: 'user',
       id: generateUniqueId(),
     };
     setMessages((currentMessages) => [...currentMessages, userMessage]);
