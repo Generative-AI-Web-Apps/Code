@@ -1,13 +1,12 @@
-import ChatMessage from './ChatMessage';
+import ChatBubble from './ChatBubble';
 import ChatBubbleLoading from './ChatBubbleLoading';
 
 const ChatList = ({ messages, isLoading }) => {
-  console.debug(messages);
   return (
     <ul className="flex flex-col gap-5">
       {messages.map((message) => (
         <li key={message?.id}>
-          <ChatMessage
+          <ChatBubble
             role={message.role}
             text={message.content}
             className={`${message.role === 'assistant' ? 'mr-auto' : 'ml-auto'} border-none`}
