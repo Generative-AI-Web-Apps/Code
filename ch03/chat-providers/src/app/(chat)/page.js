@@ -2,17 +2,51 @@
 import React from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import ChatList from '@/components/chat/ChatList';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import useEnterSubmit from '@/hooks/use-enter-submit';
 import useFocusOnSlashPress from '@/hooks/use-focus-on-slash-press';
 
 import { useChat } from 'ai/react';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
 
+const providers = [
+  { value: 'openai', label: 'OpenAI' },
+  { value: 'google', label: 'Google AI' },
+];
+
+const models = {
+  openai: [
+    { value: 'gpt-3.5-turbo', label: 'GPT-3.5-turbo' },
+    { value: 'gpt-4', label: 'GPT-4' },
+  ],
+  google: [{ value: 'models/gemini-1.5-pro-latest', label: 'Gemini Pro' }],
+};
+
 const Chat = () => {
+  const [provider, setProvider] = React.useState('openai');
+  const [model, setModel] = React.useState('gpt-4');
+
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api: '/api',
+    body: { provider, model },
+  });
+
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({ api: '/api' });
-  
+  const handleProviderChange = (value) => {
+    setProvider(value);
+    setModel(models[value][0].value);
+  };
+
+  const handleModelChange = (value) => {
+    setModel(value);
+  };
+
   const messageEndRef = React.useRef(null);
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,6 +58,32 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col w-full max-w-4xl mx-auto py-24 mx-auto stretch overflow-hidden">
+      <div className="flex justify-end gap-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="btn">Provider: {providers.find((p) => p.value === provider)?.label}</button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {providers.map((p) => (
+              <DropdownMenuItem key={p.value} onSelect={() => handleProviderChange(p.value)}>
+                {p.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="btn">Model: {models[provider].find((m) => m.value === model)?.label}</button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {models[provider].map((m) => (
+              <DropdownMenuItem key={m.value} onSelect={() => handleModelChange(m.value)}>
+                {m.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <ScrollArea className="relative mx-auto px-4 h-full pb-12 overflow-hidden">
         {messages.length === 0 && (
           <h1 className="text-6xl font-semibold leading-tight mt-4 mb-16">
@@ -62,7 +122,6 @@ const Chat = () => {
           onKeyDown={onKeyDown}
         />
       </form>
-
     </div>
   );
 };

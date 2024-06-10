@@ -1,16 +1,18 @@
+import { createOpenAI } from '@ai-sdk/openai';
 import { StreamingTextResponse, streamText, StreamData } from 'ai';
-import { getSupportedModel } from './utils';
+import { processIncomingMessages } from './utils';
 
 export const dynamic = 'force-dynamic';
 
+const model = createOpenAI({
+  apiKey: process.env.OPENAI_API_KEY || '',
+});
+
 export async function POST(req) {
-  const { messages, provider, model } = await req.json();
-
-  // Get the supported model instance using the getSupportedModel function
-  const supportedModel = getSupportedModel(provider, model);
-
+  const messages = await processIncomingMessages(req);
+  console.log(messages);
   const result = await streamText({
-    model: supportedModel,
+    model: model('gpt-4o'),
     maxTokens: 512,
     messages: [
       {
