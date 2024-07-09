@@ -19,7 +19,7 @@ const Chat = () => {
     <div className="flex flex-col w-full max-w-4xl mx-auto py-24 mx-auto stretch">
       {messages.length === 0 && (
         <h1 className="text-6xl font-semibold leading-tight mt-4 mb-16">
-          <div className="inline-block">Hello, I'm ✴️ Astra</div>
+          <div className="inline-block">Hello, I&apos;m ✴️ Astra</div>
           <br />
           <span className="text-gray-400">Ask me anything you want</span>
         </h1>

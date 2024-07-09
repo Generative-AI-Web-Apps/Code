@@ -37,7 +37,7 @@ class OpenAIHandler {
             { role: 'user', content: text },
           ],
           model: 'gpt-3.5-turbo',
-          stop: null, // Remove stop sequences for chat-like responses
+          stop: null,
           max_tokens: 150,
         })
         .withResponse();
@@ -56,11 +56,9 @@ class OpenAIHandler {
 }
 
 export function createServer() {
-  // Initialize OpenAI client and Express app
   const openai = new OpenAI({ apiKey });
   const app = express();
 
-  // Parse request body as json
   app.use(express.json());
   app.use(
     cors({

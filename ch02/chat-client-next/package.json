@@ -12,11 +12,12 @@
   "dependencies": {
     "@radix-ui/react-alert-dialog": "1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
+    "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
-    "openai": "4.38.5",
+    "openai": "4.52.2",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "9.8.2",

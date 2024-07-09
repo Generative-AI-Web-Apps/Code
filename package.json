@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Generative-AI-Web-Apps/Code#readme",
   "workspaces": [
-    "ch02/*"
+    "ch02/*",
+    "ch03/*",
+    "ch04/*"
   ]
 }

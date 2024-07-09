@@ -19,7 +19,7 @@ export async function POST(req) {
         { role: 'user', content: text },
       ],
       model: 'gpt-3.5-turbo',
-      stop: null, // Remove stop sequences for chat-like responses
+      stop: null,
       max_tokens: 150,
     })
     .withResponse();
@@ -27,7 +27,7 @@ export async function POST(req) {
     id: completion.id, // Include ID
     created: completion.created,
     role: 'assistant',
-    content: completion.choices[0].message.content, // Extract content from message
+    content: completion.choices[0].message.content,
   };
   return Response.json({ message });
 }
