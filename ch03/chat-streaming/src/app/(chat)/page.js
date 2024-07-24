@@ -6,7 +6,6 @@ import useEnterSubmit from '@/hooks/use-enter-submit';
 import useFocusOnSlashPress from '@/hooks/use-focus-on-slash-press';
 
 import { useChat } from 'ai/react';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 const Chat = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
@@ -24,8 +23,7 @@ const Chat = () => {
 
   return (
     <div className="flex flex-col w-full max-w-4xl mx-auto py-24 mx-auto stretch overflow-hidden">
-      <ScrollArea className="relative mx-auto px-4 h-full pb-12 overflow-hidden">
-        {messages.length === 0 && (
+      {messages.length === 0 && (
           <h1 className="text-6xl font-semibold leading-tight mt-4 mb-16">
             <div className="inline-block">Hello, I'm ✴️ Astra</div>
             <br />
@@ -37,7 +35,6 @@ const Chat = () => {
             <ChatList messages={messages} isLoading={isLoading} />
           </>
         )}
-      </ScrollArea>
       <div ref={messageEndRef}></div>
       <form
         className="stretch max-w-4xl flex flex-row"
