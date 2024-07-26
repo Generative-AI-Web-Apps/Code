@@ -32,8 +32,5 @@ export const AI = createAI({
     continueConversation,
   },
   initialAIState: [],
-  initialUIState: {
-    messages: [],
-    isLoading: false
-  },
+  initialUIState: []
 });
