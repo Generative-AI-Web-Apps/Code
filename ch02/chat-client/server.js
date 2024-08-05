@@ -55,16 +55,18 @@ class OpenAIHandler {
   }
 }
 
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200,
+};
+
 export function createServer() {
   const openai = new OpenAI({ apiKey });
   const app = express();
 
   app.use(express.json());
-  app.use(
-    cors({
-      origin: 'http://localhost:5173',
-    }),
-  );
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions)); // Enable preflight requests for all routes
   const openaiProvider = new OpenAIHandler(openai);
   app.post('/', (req, res) => openaiProvider.handleRequest(req, res));
   return app;

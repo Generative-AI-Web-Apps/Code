@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run start",
     "server": "node index.js",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "concurrently \"npm run server\" \"npm run dev\"",
+    "start": "concurrently \"npm run server\" \"vite\"",
     "test:unit": "vitest -c vitest.unit.config.ts",
     "test:e2e": "vitest -c vitest.e2e.config.ts",
     "format": "prettier --write ."
