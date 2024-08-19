@@ -59,6 +59,7 @@
     "typescript": "^5.2.2",
     "@testing-library/react": "^14.2.2",
     "@testing-library/user-event": "^14.5.2",
-    "superagent": "^8.1.2"
+    "superagent": "^8.1.2",
+    "winston": "^3.14.2"
   }
 }

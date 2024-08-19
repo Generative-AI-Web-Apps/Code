@@ -2,6 +2,7 @@
 import OpenAI from 'openai';
 import express from 'express';
 import cors from 'cors';
+import winston from 'winston';
 // Load environment variables from .env file
 import 'dotenv/config';
 const apiKey = process.env.OPENAI_API_KEY;
@@ -10,6 +11,12 @@ const apiKey = process.env.OPENAI_API_KEY;
 if (!apiKey) {
   throw new Error('Missing OPENAI_API_KEY environment variable');
 }
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
+  transports: [new winston.transports.Console({ format: winston.format.simple() })],
+});
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -24,7 +31,7 @@ class OpenAIHandler {
 
   async handleRequest(req, res) {
     try {
-      console.log('Received request:', req.body);
+      logger.info('Received request:', { body: req.body });
       await sleep(4000);
       const { text } = req.body;
       const { data: completion } = await this.openai.chat.completions
@@ -49,7 +56,7 @@ class OpenAIHandler {
       };
       res.json({ message });
     } catch (e) {
-      console.error(e);
+      logger.error('Internal server error:', { error: e.message });
       res.status(500).send('Internal server error');
     }
   }
@@ -64,5 +71,10 @@ export function createServer() {
   app.options('*', cors());
   const openaiProvider = new OpenAIHandler(openai);
   app.post('/', (req, res) => openaiProvider.handleRequest(req, res));
+  // Global error-handling middleware
+  app.use((err, req, res, next) => {
+    logger.error('Unhandled error:', { error: err.message, stack: err.stack });
+    res.status(500).send('Internal server error');
+  });
   return app;
 }
