@@ -1,0 +1,26 @@
+{
+    "name": "ch05-examples",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+      "build": "vite build",
+      "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+      "preview": "vite preview",
+      "format": "prettier --write ."
+    },
+    "dependencies": {
+      "dotenv": "^16.4.5"
+    },
+    "devDependencies": {
+      "concurrently": "^8.2.2",
+      "eslint": "^8.57.0",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-import": "^2.29.1",
+      "eslint-plugin-jsx-a11y": "^6.8.0",
+      "eslint-plugin-react": "^7.34.1",
+      "eslint-plugin-react-hooks": "^4.6.0",
+      "eslint-plugin-react-refresh": "^0.4.6"
+    }
+  }
+  
