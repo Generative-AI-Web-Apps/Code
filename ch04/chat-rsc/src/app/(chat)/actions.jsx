@@ -1,15 +1,16 @@
 'use server';
 
 import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
 import { createStreamableValue } from 'ai/rsc';
+import {getSupportedModel} from './utils';
 
-export async function continueConversation(history) {
+export async function continueConversation(history, provider, model) {
   'use server';
+  const supportedModel = getSupportedModel(provider, model);
   const stream = createStreamableValue();
   (async () => {
     const { textStream } = await streamText({
-      model: openai('gpt-3.5-turbo'),
+      model: supportedModel,
       system: "I'm happy to assist you in any way I can. How can I be of service today?",
       messages: history,
     });

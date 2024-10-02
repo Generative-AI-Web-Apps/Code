@@ -1,7 +1,5 @@
 "use client";
 
-// imports
-
 export default function Page() {
   const [component, setComponent] = useState();
   const handleInputChange = (event) => {

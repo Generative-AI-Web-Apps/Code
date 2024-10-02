@@ -1,16 +1,16 @@
 'use server';
 
 import { createAI, getMutableAIState, streamUI } from 'ai/rsc';
-import { openai } from '@ai-sdk/openai';
 import ChatBubble from '../../components/chat/ChatBubble';
 import { generateId } from 'ai';
+import { getSupportedModel } from './utils';
 
-export async function continueConversation(input) {
+export async function continueConversation(input, provider, model) {
   'use server';
-
+  const supportedModel = getSupportedModel(provider, model);
   const history = getMutableAIState();
   const result = await streamUI({
-    model: openai('gpt-3.5-turbo'),
+    model: supportedModel,
     messages: [...history.get(), { role: 'user', content: input }],
     text: ({ content, done }) => {
       if (done) {
@@ -32,5 +32,5 @@ export const AI = createAI({
     continueConversation,
   },
   initialAIState: [],
-  initialUIState: []
+  initialUIState: [],
 });

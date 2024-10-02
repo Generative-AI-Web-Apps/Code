@@ -10,7 +10,10 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@ai-sdk/openai": "0.0.18",
+    "@ai-sdk/openai": "0.0.63",
+    "@ai-sdk/google": "0.0.51",
+    "ai": "^3.4.7",
+    "openai": "4.67.0",
     "@radix-ui/react-alert-dialog": "1.0.5",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
@@ -18,8 +21,6 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
-    "ai": "^3.2.15",
-    "openai": "4.52.2",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "9.8.2",

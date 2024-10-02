@@ -25,7 +25,7 @@ const Chat = () => {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    const data = { message: e.target.value };
+    const data = { message: input };
     if (imageUrl) {
       data.imageUrl = imageUrl;
       setImageUrl(null);

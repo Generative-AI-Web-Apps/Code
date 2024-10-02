@@ -1,4 +1,4 @@
-import { StreamingTextResponse, streamText, StreamData } from 'ai';
+import { streamText } from 'ai';
 import { getSupportedModel } from './utils';
 
 export const dynamic = 'force-dynamic';
@@ -20,12 +20,14 @@ export async function POST(req) {
       ...messages,
     ],
   });
-  const data = new StreamData();
-  const stream = result.toAIStream({
+  const stream = result.toDataStream({
     onFinal(_) {
       data.close();
     },
   });
 
-  return new StreamingTextResponse(stream, {}, data);
+  return new Response(stream, {
+    status: 200,
+    contentType: 'text/plain; charset=utf-8',
+  });
 }

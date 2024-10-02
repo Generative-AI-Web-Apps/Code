@@ -4,21 +4,22 @@ import { createAI, getMutableAIState, streamUI } from 'ai/rsc';
 import { openai } from '@ai-sdk/openai';
 import ChatBubble from '../../components/chat/ChatBubble';
 import { generateId, generateObject } from 'ai';
+import { getSupportedModel } from './utils';
 
 const ProductSchema = z.object({
   name: z.string(),
   description: z.string(),
   price: z.number(),
-  category: z.string()
+  category: z.string(),
 });
 const ProductListSchema = z.array(ProductSchema);
 
-export async function continueConversation(input) {
+export async function continueConversation(input, provider, model) {
   'use server';
-
+  const supportedModel = getSupportedModel(provider, model);
   const history = getMutableAIState();
   const result = await streamUI({
-    model: openai('gpt-3.5-turbo'),
+    model: supportedModel,
     messages: [...history.get(), { role: 'user', content: input }],
     text: ({ content, done }) => {
       if (done) {
@@ -42,7 +43,7 @@ export async function generateProductList(prompt) {
   } = await generateObject({
     model: openai('gpt-3.5-turbo'),
     schema: z.object({
-      products: ProductListSchema
+      products: ProductListSchema,
     }),
     prompt: `Generate a list of 5 products related to: ${prompt}. Provide name, description, price, and category for each product.`,
   });

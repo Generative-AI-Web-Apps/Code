@@ -10,7 +10,6 @@ const model = createOpenAI({
 
 export async function POST(req) {
   const messages = await processIncomingMessages(req);
-  console.log(messages);
   const result = await streamText({
     model: model('gpt-4o'),
     maxTokens: 512,

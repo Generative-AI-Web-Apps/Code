@@ -1,5 +1,5 @@
-export async function getAssistantResponse(text) {
-  const response = await fetch('/api', {
+export async function getAssistantResponse(text, path = '/api') {
+  const response = await fetch(path, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text }),

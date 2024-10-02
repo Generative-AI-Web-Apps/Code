@@ -11,7 +11,7 @@ import { getAssistantResponse } from '@/lib/getAssistantResponse';
 const Chat = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
-  const { messages, isLoading, handleSubmit, inputValue, setInputValue } = useChatFormSubmit(getAssistantResponse);
+  const { messages, isLoading, handleSubmit, inputValue, setInputValue } = useChatFormSubmit((text) => getAssistantResponse(text, '/api'));
   const onInputChange = (e) => {
     setInputValue(e.target.value);
   };

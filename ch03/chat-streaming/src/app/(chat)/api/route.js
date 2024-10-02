@@ -1,17 +1,16 @@
-import { createOpenAI } from '@ai-sdk/openai';
-import { StreamingTextResponse, streamText, StreamData } from 'ai';
+import { streamText } from 'ai';
+import { getSupportedModel } from './utils';
 
 export const dynamic = 'force-dynamic';
 
-const model = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
-
 export async function POST(req) {
-  const { messages } = await req.json();
+  const { messages, provider, model } = await req.json();
+
+  // Get the supported model instance using the getSupportedModel function
+  const supportedModel = getSupportedModel(provider, model);
 
   const result = await streamText({
-    model: model('gpt-4o'),
+    model: supportedModel,
     maxTokens: 512,
     messages: [
       {
@@ -21,12 +20,14 @@ export async function POST(req) {
       ...messages,
     ],
   });
-  const data = new StreamData();
-  const stream = result.toAIStream({
+  const stream = result.toDataStream({
     onFinal(_) {
       data.close();
     },
   });
 
-  return new StreamingTextResponse(stream, {}, data);
+  return new Response(stream, {
+    status: 200,
+    contentType: 'text/plain; charset=utf-8',
+  });
 }

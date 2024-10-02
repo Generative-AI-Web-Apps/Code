@@ -22,7 +22,9 @@
     "react-dom": "^18",
     "react-intersection-observer": "9.8.2",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@google/generative-ai": "0.17.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^8",
