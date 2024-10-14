@@ -1,0 +1,41 @@
+{
+  "name": "chat-rsc-langchain-agents",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "0.0.63",
+    "@ai-sdk/google": "0.0.51",
+    "ai": "^3.4.7",
+    "openai": "4.67.0",
+    "@langchain/community": "0.3.4",
+    "duck-duck-scrape": "2.2.5",
+    "@langchain/core": "^0.3.3",
+    "@langchain/openai": "^0.3.0",
+    "@radix-ui/react-alert-dialog": "1.0.5",
+    "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.376.0",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-intersection-observer": "9.8.2",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tw-elements": "^1.0.0-beta2"
+  }
+}

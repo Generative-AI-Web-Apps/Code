@@ -1,5 +1,5 @@
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { ChatPromptTemplate, PromptTemplate } from "@langchain/core/prompts";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableLambda } from "@langchain/core/runnables";
 import { ChatOpenAI } from "@langchain/openai";
 import "dotenv/config";
