@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run start",
+    "dev:google": "npm run start:google",
     "server": "node index.js",
     "server:google": "node server.google.js",
     "build": "vite build",

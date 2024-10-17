@@ -12,15 +12,10 @@ export async function POST(req) {
   const { text } = await req.json();
 
   const result = await generateText({
+    system: "I'm happy to assist you in any way I can. How can I be of service today?",
+    prompt: text,
     model: model('gpt-4o'),
     maxTokens: 512,
-    messages: [
-      {
-        role: 'system',
-        content: "I'm happy to assist you in any way I can. How can I be of service today?",
-      },
-      { role: 'user', content: text },
-    ],
   });
   const message = {
     id: uuidv4(),
