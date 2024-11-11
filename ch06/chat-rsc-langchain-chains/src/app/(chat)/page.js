@@ -37,9 +37,9 @@ export default function Home() {
     setIsloading(true);
     setConversation((currentConversation) => [
       ...currentConversation,
-      { id: generateId(), role: 'user', display: input },
+      { id: generateId(), role: 'user', display: value },
     ]);
-    const message = await continueConversation(input);
+    const message = await continueConversation(value);
     setConversation((currentConversation) => [...currentConversation, message]);
     setIsloading(false);
   };
