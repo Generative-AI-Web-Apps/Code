@@ -40,7 +40,7 @@ const model = new ChatGoogleGenerativeAI({
 // Load the summarization chain
 const chain = loadSummarizationChain(model, {
   type: "map_reduce",
-  verbose: false,
+  verbose: true,
 });
 
 // Call the summarization chain
