@@ -28,4 +28,3 @@ const { embeddings } = await embedMany({
 });
 
 console.log(embedding);
-console.log(embeddings);

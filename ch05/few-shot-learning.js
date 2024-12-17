@@ -32,7 +32,7 @@ async function generateProgrammingLanguages() {
   console.log("Generated Programming Languages:", response.text);
 }
 
-// generateProgrammingLanguages();
+generateProgrammingLanguages();
 
 async function supportCustomerIssue(message) {
   const system = `

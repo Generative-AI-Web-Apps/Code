@@ -1,4 +1,4 @@
-const { encoding_for_model } = require("@dqbd/tiktoken");
+import { encoding_for_model } from '@dqbd/tiktoken';
 
 // Function to count tokens for a given text and model
 function countTokens(text, model = "gpt-3.5-turbo") {

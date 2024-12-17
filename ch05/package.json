@@ -12,12 +12,14 @@
     "dependencies": {
       "dotenv": "^16.4.5",
       "redis": "4.7.0",
-      "@ai-sdk/openai": "0.0.18",
-      "ai": "^3.2.15",
-      "openai": "4.52.2"
+      "@ai-sdk/openai": "1.0.8",
+      "@ai-sdk/google": "1.0.10",
+      "ai": "^4.0.19",
+      "openai": "4.76.3",
+      "@dqbd/tiktoken": "1.0.17"
     },
     "devDependencies": {
-      "concurrently": "^8.2.2",
+      "concurrently": "^9.1.0",
       "eslint": "^8.57.0",
       "eslint-config-prettier": "^9.1.0",
       "eslint-plugin-import": "^2.29.1",
