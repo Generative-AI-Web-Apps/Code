@@ -11,12 +11,12 @@
     },
     "dependencies": {
       "dotenv": "^16.4.5",
-      "@langchain/core": "^0.3.7",
-      "@langchain/openai": "^0.3.5",
-      "@langchain/google-genai": "^0.1",
-      "@langchain/langgraph": "^0.2.11",
-      "@langchain/anthropic": "0.3.3",
-      "langchain": "^0.3.0"
+      "@langchain/core": "^0.3.26",
+      "@langchain/openai": "^0.3.16",
+      "@langchain/google-genai": "^0.1.6",
+      "@langchain/langgraph": "^0.2.36",
+      "@langchain/anthropic": "0.3.11",
+      "langchain": "^0.3.8"
     },
     "devDependencies": {
       "concurrently": "^8.2.2",

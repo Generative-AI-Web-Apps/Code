@@ -16,9 +16,7 @@ const model = new ChatOpenAI({
   streaming: true,
 });
 
-const tool = new DuckDuckGoSearch({ maxResults: 1 });
-
-const tools = [tool];
+const tools = [new DuckDuckGoSearch({ maxResults: 1 })];
 
 const AGENT_SYSTEM_TEMPLATE = `You are a helpful AI assistant that can answer questions about current events and general knowledge. You have access to the DuckDuckGo search engine to find up-to-date information.
 
