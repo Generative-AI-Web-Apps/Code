@@ -1,14 +1,18 @@
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI } from "@langchain/google-genai"; // Import Google AI classes
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
-import { PromptTemplate } from "@langchain/core/prompts";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { formatDocumentsAsString } from "langchain/util/document";
-import {
-  RunnablePassthrough,
-  RunnableSequence,
-} from "@langchain/core/runnables";
-import "dotenv/config";
+import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI } from '@langchain/google-genai'; // Import Google AI classes
+import { MemoryVectorStore } from 'langchain/vectorstores/memory';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { formatDocumentsAsString } from 'langchain/util/document';
+import { RunnablePassthrough, RunnableSequence } from '@langchain/core/runnables';
+import { ConsoleCallbackHandler } from "@langchain/core/tracers/console"; // Importing a built-in callback handler
+import 'dotenv/config';
+
+const debugChain = (input) => {
+  console.log('Current Execution Context:', input);
+
+  return input;
+};
 
 const apiKey = process.env.GOOGLE_API_KEY; // Google API key
 
@@ -25,15 +29,16 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 const documents = await splitter.createDocuments([text]);
 
-const googleEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: "text-embedding-004" });
+const googleEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'text-embedding-004' });
 
 const googleVectorStore = await MemoryVectorStore.fromDocuments(documents, googleEmbeddings);
 const googleRetriever = googleVectorStore.asRetriever();
 
-const googleModel = new ChatGoogleGenerativeAI({ apiKey });
+const handler = new ConsoleCallbackHandler();
+const googleModel = new ChatGoogleGenerativeAI({ apiKey } );
 
 const standaloneQuestionTemplate =
-  "Transform the following question into a clear and concise standalone question. Original question: {question} Standalone question:";
+  'Transform the following question into a clear and concise standalone question. Original question: {question} Standalone question:';
 
 const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate);
 
@@ -43,9 +48,7 @@ Question: {question}
 Answer:`;
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 
-const standaloneQuestionChainGoogle = standaloneQuestionPrompt
-  .pipe(googleModel)
-  .pipe(new StringOutputParser());
+const standaloneQuestionChainGoogle = standaloneQuestionPrompt.pipe(googleModel).pipe(new StringOutputParser());
 
 const retrieverChainGoogle = RunnableSequence.from([
   (prevResult) => prevResult.standalone_question,
@@ -64,11 +67,8 @@ const chainGoogle = RunnableSequence.from([
   },
   answerChainGoogle,
 ]);
+const finalChain = RunnableSequence.from([debugChain, chainGoogle]);
 
 // Example usage for Google AI
-console.log(
-  await chainGoogle.invoke({ question: "What is artificial intelligence?" })
-);
-console.log(
-  await chainGoogle.invoke({ question: "What is the exact date of the first human landing on Mars?" })
-);
+console.log(await finalChain.invoke({ question: 'What is artificial intelligence?' }, {callbacks: [handler]}));
+console.log(await finalChain.invoke({ question: 'What is the exact date of the first human landing on Mars?' }));

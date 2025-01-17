@@ -59,7 +59,6 @@ function mergeSimilarClusters(chunks, clusterLabels, similarityThreshold) {
   const mergedChunks = [];
   const clusterMap = {};
 
-  // Group chunks by their cluster labels
   clusterLabels.forEach((label, index) => {
     if (!clusterMap[label]) {
       clusterMap[label] = [];
@@ -67,7 +66,6 @@ function mergeSimilarClusters(chunks, clusterLabels, similarityThreshold) {
     clusterMap[label].push(chunks[index]);
   });
 
-  // Create new Document instances for each merged cluster
   Object.values(clusterMap).forEach((cluster, idx) => {
     const mergedContent = cluster.join(' ');
     const newId = `merged-${idx + 1}`;
@@ -92,13 +90,11 @@ async function processDocuments(documents) {
 
   console.log('Clustered Documents:', clusteredDocs);
 
-  // Load the summarization chain
   const chain = loadSummarizationChain(model, {
     type: 'map_reduce',
     verbose: true,
   });
 
-  // Call the summarization chain
   const res = await chain.invoke({
     input_documents: clusteredDocs,
   });
