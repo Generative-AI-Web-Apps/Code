@@ -23,7 +23,8 @@
     "ch03/*",
     "ch04/*",
     "ch06/*",
-    "ch07/*"
+    "ch07/*",
+    "ch08/*"
   ],
   "dependencies": {
     "hnswlib-node": "^3.0.0"

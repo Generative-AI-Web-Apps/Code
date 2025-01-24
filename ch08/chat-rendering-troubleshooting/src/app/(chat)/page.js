@@ -70,7 +70,7 @@ export default function Home() {
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     const value = input.trim();
-    if (!value) return; // Exit if there's no input
+    if (!value) return;
 
     logger.info('User submitted input', { inputValue: value }); 
     setInput('');
@@ -82,13 +82,13 @@ export default function Home() {
     ]);
 
     try {
-      const message = await continueConversation(value, provider, model); // Call AI function to continue conversation
-      setConversation((currentConversation) => [...currentConversation, message]); // Add assistant message to conversation history
-      logger.info('Assistant response received', { assistantMessage: message }); // Log assistant response
+      const message = await continueConversation(value, provider, model); 
+      setConversation((currentConversation) => [...currentConversation, message]);
+      logger.info('Assistant response received', { assistantMessage: message });
     } catch (error) {
-      logger.error('Error during conversation continuation', { error: error.message }); // Log any errors encountered
+      logger.error('Error during conversation continuation', { error: error.message });
     } finally {
-      setIsloading(false); // Reset loading state after processing is complete
+      setIsloading(false);
     }
   };
 
@@ -127,7 +127,7 @@ export default function Home() {
 
       <div className="flex flex-col w-full max-w-4xl mx-auto py-24 mx-auto stretch">
         {conversation.length > 0 && <ChatList messages={conversation} isLoading={isLoading} />}
-        <div ref={messageEndRef}></div> {/* Ref for scrolling to the end of chat messages */}
+        <div ref={messageEndRef}></div>
         <form
           className="stretch max-w-4xl flex flex-row"
           ref={formRef}
@@ -148,8 +148,8 @@ export default function Home() {
               name="message"
               rows={1}
               value={input}
-              onChange={handleInputChange} // Handle changes in textarea input
-              onKeyDown={onKeyDown} // Handle key down events for form submission
+              onChange={handleInputChange}
+              onKeyDown={onKeyDown}
             />
           </div>
         </form>
