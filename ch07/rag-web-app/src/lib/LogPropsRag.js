@@ -124,23 +124,19 @@ Respond with just one word, the word 'True', or the word 'False', nothing else.`
     } = options;
 
     try {
-      // Perform initial RAG retrieval
       const ragResponse = await this.performRAG(query);
 
-      // Evaluate context confidence
       const confidenceResult = await this.evaluateContextConfidence(
         ragResponse.sourceDocuments.map((doc) => doc.pageContent).join('\n\n'),
         query,
       );
       console.log('Confidence result:', JSON.stringify(confidenceResult));
-      // Check confidence level
       if (
         confidenceResult &&
         confidenceResult.confidenceResults.length &&
         confidenceResult.confidenceResults[0].token == 'True' &&
         confidenceResult.confidenceResults[0].linearProbability >= confidenceThreshold
       ) {
-        // High confidence response
         return {
           ...ragResponse,
           confidenceMetrics: confidenceResult,
@@ -161,7 +157,7 @@ Respond with just one word, the word 'True', or the word 'False', nothing else.`
             answer: 'I do not have sufficient context to confidently answer this question. Would you like to rephrase or provide more context?',
             confidenceMetrics: confidenceResult,
             suggestion: 'Would you like to rephrase or provide more context?',
-            sourceDocuments: [] // Ensure sourceDocuments is defined as an empty array
+            sourceDocuments: []
           };
 
         default:
@@ -169,7 +165,7 @@ Respond with just one word, the word 'True', or the word 'False', nothing else.`
             ...ragResponse,
             confidenceMetrics: confidenceResult,
             warning: 'Low confidence in retrieved context',
-            sourceDocuments: [] // Ensure sourceDocuments is defined as an empty array
+            sourceDocuments: []
           };
       }
     } catch (error) {

@@ -1,0 +1,53 @@
+{
+  "name": "chat-rag",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@ai-sdk/google": "1.2.11",
+    "@ai-sdk/openai": "1.3.12",
+    "@clerk/nextjs": "6.15.0",
+    "@langchain/community": "^0.3.40",
+    "@langchain/core": "^0.3.44",
+    "@langchain/openai": "^0.5.5",
+    "@langchain/google-genai": "^0.2.4",
+    "@pinecone-database/pinecone": "^5.1.1",
+    "@radix-ui/react-alert-dialog": "1.0.5",
+    "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.34.7",
+    "@upstash/vector": "^1.2.1",
+    "ai": "^4.3.6",
+    "autoprefixer": "10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "docx-parser": "^0.2.1",
+    "langchain": "^0.3.21",
+    "lucide-react": "^0.376.0",
+    "next": "14.2.25",
+    "openai": "4.94.0",
+    "pdf-parse": "^1.1.1",
+    "prisma": "^6.6.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-intersection-observer": "9.8.2",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^9.0.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tw-elements": "^1.0.0-beta2"
+  }
+}

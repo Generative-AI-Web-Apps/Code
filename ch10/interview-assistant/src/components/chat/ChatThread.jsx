@@ -177,7 +177,6 @@ export default function ChatThread({ sessionId, initialMessages = [], isComplete
       currentSessionIdRef.current = sessionId;
     }
 
-    // Process initialMessages
     if (initialMessages.length > 0) {
       const filteredMessages = initialMessages.filter((msg) => msg.role !== 'system');
       setAIState(filteredMessages);
@@ -217,7 +216,6 @@ export default function ChatThread({ sessionId, initialMessages = [], isComplete
     }
   }, [sessionId, initialMessages, setAIState, setUIState]);
 
-  // Function to complete interview session
   const handleCompleteSession = async () => {
     if (isLoading || uiState.length === 0) return;
 

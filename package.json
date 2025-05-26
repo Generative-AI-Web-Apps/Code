@@ -25,7 +25,9 @@
     "ch06/*",
     "ch07/*",
     "ch08/*",
-    "ch09/*"
+    "ch09/*",
+    "ch010/*",
+    "ch011/*"
   ],
   "dependencies": {
     "hnswlib-node": "^3.0.0"
