@@ -6,7 +6,19 @@ export async function getAssistantResponse(text, path = '/api') {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch response from server');
+    let errorMessage = 'Failed to fetch response from server';
+    try {
+      const errorData = await response.json();
+      if (errorData?.error) {
+        errorMessage = errorData.error;
+      }
+    } catch {
+      // ignore JSON parsing errors
+    }
+
+    const error = new Error(errorMessage);
+    error.status = response.status;
+    throw error;
   }
 
   return await response.json();

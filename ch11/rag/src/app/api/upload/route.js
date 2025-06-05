@@ -62,7 +62,6 @@ export async function POST(request, { params }) {
         const filePath = path.join(uploadsDir, fileName);
         await writeFile(filePath, buffer);
 
-        // Add document to database
         const doc = await addDocument({
           filename: fileName,
           originalName: fileName,

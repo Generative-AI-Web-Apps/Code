@@ -11,7 +11,9 @@ import { getAssistantResponse } from '@/lib/getAssistantResponse';
 const Chat = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
-  const { messages, isLoading, handleSubmit, inputValue, setInputValue } = useChatFormSubmit((text) => getAssistantResponse(text, '/chat/api'));
+  const { messages, isLoading, handleSubmit, inputValue, setInputValue, errorMessage } = useChatFormSubmit((text) =>
+    getAssistantResponse(text, '/chat/api'),
+  );
   const onInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -25,6 +27,11 @@ const Chat = () => {
         </h1>
       )}
       {messages.length > 0 && <ChatList messages={messages} isLoading={isLoading} />}
+      {errorMessage && (
+        <div className="text-red-600 font-semibold mb-4">
+          {errorMessage}
+        </div>
+      )}
       <form
         className="stretch max-w-4xl flex flex-row"
         ref={formRef}
