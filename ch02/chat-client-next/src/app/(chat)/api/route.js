@@ -1,33 +1,38 @@
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { v4 as uuidv4 } from 'uuid';
 
 export const dynamic = 'force-dynamic';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 export async function POST(req) {
   const { text } = await req.json();
 
-  const { data: completion } = await openai.chat.completions
-    .create({
-      messages: [
-        {
-          role: 'system',
-          content: "I'm happy to assist you in any way I can. How can I be of service today?",
-        },
-        { role: 'user', content: text },
-      ],
-      model: 'gpt-3.5-turbo',
-      stop: null,
-      max_tokens: 150,
-    })
-    .withResponse();
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const chat = model.startChat({
+    history: [
+      {
+        role: "user",
+        parts: [{ text: text }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "I'm happy to assist you in any way I can. How can I be of service today?" }],
+      },
+    ],
+  });
+
+  let result = await chat.sendMessage(text);
+  const responseMessage = result.response.text();
+
   const message = {
-    id: completion.id, // Include ID
-    created: completion.created,
+    id: uuidv4(),
+    created: new Date(),
     role: 'assistant',
-    content: completion.choices[0].message.content,
+    content: responseMessage,
   };
-  return Response.json({ message });
+
+  return new Response(JSON.stringify({ message }), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
