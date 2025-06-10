@@ -8,7 +8,7 @@ const supportedProviders = {
   },
   google: {
     constructor: createGoogleGenerativeAI,
-    models: ['models/gemini-1.5-pro-latest'],
+    models: ['models/gemini-2.0-flash'],
   },
 };
 

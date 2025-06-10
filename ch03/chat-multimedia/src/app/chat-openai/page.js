@@ -12,25 +12,28 @@ import { ScrollArea } from '@radix-ui/react-scroll-area';
 const Chat = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({ api: '/chat-google/api' });
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({ api: '/chat-openai/api' });
   const messageEndRef = React.useRef(null);
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   const [imageName, setImageName] = React.useState(null);
   const [imageUrl, setImageUrl] = React.useState(null);
-  const handleUploadFile = async (file, base64) => {
+  const [imageType, setImageType] = React.useState(null);
+  const handleUploadFile = async (file, base64, mimeType) => {
     setImageUrl(base64);
     setImageName(file.name);
+    setImageType(mimeType);
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const data = { message: input };
-    console.debug('data', data);
     if (imageUrl) {
       data.imageUrl = imageUrl;
+      data.mimeType = imageType;
       setImageUrl(null);
       setImageName(null);
+      setImageType(null);
     }
     handleSubmit(e, { data });
   };
@@ -65,7 +68,7 @@ const Chat = () => {
       >
         <div className="fixed bottom-0 w-full max-w-4xl p-2 mb-8 border border-gray-300 rounded shadow-xl">
           <div className="flex items-center justify-end pb-2">
-            <FileUploader onFileUpload={handleUploadFile} maxFileSize={10 * 1024 * 1024} fileName={imageName}/>
+            <FileUploader onFileUpload={handleUploadFile} maxFileSize={10 * 1024 * 1024} fileName={imageName} />
           </div>
           <Textarea
             ref={inputRef}

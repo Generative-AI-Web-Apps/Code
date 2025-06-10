@@ -19,7 +19,7 @@ const FileUploader = ({ fileName, onFileUpload, maxFileSize = 4 * 1024 * 1024 })
 
     try {
       const base64 = await fileToBase64(selectedFile);
-      onFileUpload(selectedFile, base64);
+      onFileUpload(selectedFile, base64, selectedFile.type);
     } catch (error) {
       setError('Error uploading file.');
     }

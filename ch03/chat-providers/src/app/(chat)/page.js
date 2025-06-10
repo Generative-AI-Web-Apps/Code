@@ -12,7 +12,6 @@ import useEnterSubmit from '@/hooks/use-enter-submit';
 import useFocusOnSlashPress from '@/hooks/use-focus-on-slash-press';
 
 import { useChat } from 'ai/react';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 
 const providers = [
   { value: 'openai', label: 'OpenAI' },
@@ -24,7 +23,7 @@ const models = {
     { value: 'gpt-3.5-turbo', label: 'GPT-3.5-turbo' },
     { value: 'gpt-4', label: 'GPT-4' },
   ],
-  google: [{ value: 'models/gemini-1.5-pro-latest', label: 'Gemini Pro' }],
+  google: [{ value: 'models/gemini-2.0-flash', label: 'Gemini' }],
 };
 
 const Chat = () => {
@@ -84,7 +83,7 @@ const Chat = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <ScrollArea className="relative mx-auto px-4 h-full pb-12 overflow-hidden">
+      <div className="flex flex-col w-full max-w-4xl mx-auto py-24 mx-auto stretch overflow-hidden">
         {messages.length === 0 && (
           <h1 className="text-6xl font-semibold leading-tight mt-4 mb-16">
             <div className="inline-block">Hello, I'm ✴️ Astra</div>
@@ -97,7 +96,7 @@ const Chat = () => {
             <ChatList messages={messages} isLoading={isLoading} />
           </>
         )}
-      </ScrollArea>
+      </div>
       <div ref={messageEndRef}></div>
       <form
         className="stretch max-w-4xl flex flex-row"

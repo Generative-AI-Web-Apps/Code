@@ -1,15 +1,17 @@
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { streamText, StreamData } from 'ai';
+import { createOpenAI } from '@ai-sdk/openai';
+import { streamText } from 'ai';
 import { processIncomingMessages } from './utils';
 
 export const dynamic = 'force-dynamic';
 
-const model = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY });
+const model = createOpenAI({
+  apiKey: process.env.OPENAI_API_KEY || '',
+});
 
 export async function POST(req) {
   const messages = await processIncomingMessages(req);
   const result = await streamText({
-    model: model('models/gemini-1.5-pro-001'),
+    model: model('gpt-4.1-mini'),
     maxTokens: 512,
     messages: [
       {
@@ -19,7 +21,6 @@ export async function POST(req) {
       ...messages,
     ],
   });
-  const data = new StreamData();
   const stream = result.toDataStream({
     onFinal(_) {
       data.close();
