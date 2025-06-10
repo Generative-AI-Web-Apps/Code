@@ -1,16 +1,17 @@
 import { streamText } from 'ai';
-import { getSupportedModel } from './utils';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(req) {
-  const { messages, provider, model } = await req.json();
+const model = createGoogleGenerativeAI({
+  apiKey: process.env.GOOGLE_API_KEY || '',
+});
 
-  // Get the supported model instance using the getSupportedModel function
-  const supportedModel = getSupportedModel(provider, model);
+export async function POST(req) {
+  const { messages } = await req.json();
 
   const result = await streamText({
-    model: supportedModel,
+    model: model('gemini-2.0-flash'),
     maxTokens: 512,
     messages: [
       {
