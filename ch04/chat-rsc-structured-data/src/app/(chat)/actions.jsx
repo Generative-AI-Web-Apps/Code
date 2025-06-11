@@ -1,7 +1,6 @@
 'use server';
 import { z } from 'zod';
 import { createAI, getMutableAIState, streamUI } from 'ai/rsc';
-import { openai } from '@ai-sdk/openai';
 import ChatBubble from '../../components/chat/ChatBubble';
 import { generateId, generateObject } from 'ai';
 import { getSupportedModel } from './utils';
@@ -38,10 +37,11 @@ export async function continueConversation(input, provider, model) {
 
 export async function generateProductList(prompt) {
   'use server';
+  const supportedModel = getSupportedModel('google', 'models/gemini-2.0-flash');
   const {
     object: { products },
   } = await generateObject({
-    model: openai('gpt-3.5-turbo'),
+    model: supportedModel,
     schema: z.object({
       products: ProductListSchema,
     }),
