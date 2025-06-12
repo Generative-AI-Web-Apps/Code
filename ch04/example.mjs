@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { google  } from '@ai-sdk/google';
 
 import { generateObject } from "ai";
 
@@ -17,7 +18,7 @@ async function generateProductList(prompt) {
   const {
     object: { products },
   } = await generateObject({
-    model: openai("gpt-3.5-turbo"),
+    model: google("models/gemini-2.0-flash"),
 
     schema: z.object({
       products: ProductListSchema,
