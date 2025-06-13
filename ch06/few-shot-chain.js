@@ -55,3 +55,5 @@ export const prompt = new FewShotPromptTemplate({
 const formatted = await prompt.format({
   input: "What is the capital of Canada?",
 });
+
+console.log(formatted);

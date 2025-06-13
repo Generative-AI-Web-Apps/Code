@@ -9,7 +9,7 @@ import {
 import { ChatMessageHistory } from "langchain/stores/message/in_memory";
 import "dotenv/config";
 
-const apiKey = process.env.GOOGLE_API_KEY; // Google API key
+const apiKey = process.env.GOOGLE_API_KEY;
 
 const pastMessages = [];
 pastMessages.push(

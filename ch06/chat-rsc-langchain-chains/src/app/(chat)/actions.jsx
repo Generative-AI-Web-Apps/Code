@@ -3,7 +3,7 @@
 import { createStreamableUI } from 'ai/rsc';
 import { RunnableLambda } from '@langchain/core/runnables';
 import { generateId } from 'ai';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { getMutableAIState, createAI } from 'ai/rsc';
@@ -28,9 +28,9 @@ const promptTemplate = ChatPromptTemplate.fromMessages([
   ],
 ]);
 
-const llm = new ChatOpenAI({
-  openAIApiKey: process.env.OPENAI_API_KEY,
-  model: 'gpt-4o',
+const llm = new ChatGoogleGenerativeAI({
+  apiKey: process.env.GOOGLE_API_KEY,
+  model: 'gemini-2.0-flash',
 });
 
 const fetchWeatherData = async (input) => ({

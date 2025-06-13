@@ -1,7 +1,7 @@
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableLambda } from "@langchain/core/runnables";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai"; // Import for Google AI
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import "dotenv/config";
 
 const apiKey = process.env.GOOGLE_API_KEY; // Google API key
@@ -21,7 +21,7 @@ const vowelCountFunction = (input) => {
 
 const model = new ChatGoogleGenerativeAI({
   apiKey,
-  model: "gemini-1.5-flash-002",
+  model: "gemini-2.0-flash",
 });
 
 const prompt = ChatPromptTemplate.fromTemplate(
