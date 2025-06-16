@@ -22,7 +22,7 @@ const docsSummary = await splitter.splitDocuments(normalizeDocuments(docs));
 const tokenTracker = new TokenTracker();
 const model = new ChatGoogleGenerativeAI({
   apiKey: apiKey,
-  model: "gemini-1.5-flash-002",
+  model: "gemini-2.0-flash",
   streaming: false,
   callbacks: [
     {

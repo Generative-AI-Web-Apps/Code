@@ -8,13 +8,12 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatPromptTemplate } from '@langchain/core/prompts';
 const apiKey = process.env.GOOGLE_API_KEY;
 
 // Initialize the model
 const model = new ChatGoogleGenerativeAI({
   apiKey: apiKey,
-  model: "gemini-1.5-flash-002",
+  model: "gemini-2.0-flash",
   streaming: false,
 });
 

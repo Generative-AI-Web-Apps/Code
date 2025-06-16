@@ -23,7 +23,7 @@ class RAGSystem {
 
     this.llm = new ChatGoogleGenerativeAI({
       apiKey,
-      model: 'gemini-1.5-flash-002',
+      model: 'gemini-2.0-flash',
       streaming: false,
     });
 
