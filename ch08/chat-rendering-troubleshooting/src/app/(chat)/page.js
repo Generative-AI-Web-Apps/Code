@@ -29,7 +29,7 @@ const models = {
     { value: 'gpt-3.5-turbo', label: 'GPT-3.5-turbo' },
     { value: 'gpt-4', label: 'GPT-4' },
   ],
-  google: [{ value: 'models/gemini-1.5-pro-latest', label: 'Gemini Pro' }],
+  google: [{ value: 'models/gemini-2.0-flash', label: 'Gemini' }],
 };
 
 export default function Home() {

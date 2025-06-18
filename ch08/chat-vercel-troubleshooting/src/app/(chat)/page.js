@@ -29,7 +29,7 @@ const models = {
     { value: 'gpt-3.5-turbo', label: 'GPT-3.5-turbo' },
     { value: 'gpt-4', label: 'GPT-4' },
   ],
-  google: [{ value: 'models/gemini-1.5-pro-latest', label: 'Gemini Pro' }],
+  google: [{ value: 'models/gemini-2.0-flash', label: 'Gemini' }],
 };
 
 export default function Home() {
@@ -82,13 +82,13 @@ export default function Home() {
     ]);
 
     try {
-      const message = await continueConversation(value, provider, model); // Call AI function to continue conversation
-      setConversation((currentConversation) => [...currentConversation, message]); // Add assistant message to conversation history
-      logger.info('Assistant response received', { assistantMessage: message }); // Log assistant response
+      const message = await continueConversation(value, provider, model); 
+      setConversation((currentConversation) => [...currentConversation, message]); 
+      logger.info('Assistant response received', { assistantMessage: message }); 
     } catch (error) {
-      logger.error('Error during conversation continuation', { error: error.message }); // Log any errors encountered
+      logger.error('Error during conversation continuation', { error: error.message });
     } finally {
-      setIsloading(false); // Reset loading state after processing is complete
+      setIsloading(false);
     }
   };
 
@@ -148,8 +148,8 @@ export default function Home() {
               name="message"
               rows={1}
               value={input}
-              onChange={handleInputChange} // Handle changes in textarea input
-              onKeyDown={onKeyDown} // Handle key down events for form submission
+              onChange={handleInputChange}
+              onKeyDown={onKeyDown}
             />
           </div>
         </form>

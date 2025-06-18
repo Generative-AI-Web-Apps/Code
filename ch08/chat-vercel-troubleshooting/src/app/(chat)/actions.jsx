@@ -15,7 +15,7 @@ const retryableStatusCodes = [429, 500];
 
 const supportedModel = createFallback({
   models: [
-    createGoogleGenerativeAI({ apiKey: googleAPIKey })('models/gemini-1.5-pro-001'),
+    createGoogleGenerativeAI({ apiKey: googleAPIKey })('models/gemini-2.0-flash'),
     createOpenAI({ apiKey: openAPIKey })('gpt-3.5-turbo'),
   ],
   onError: (error, modelId) => {

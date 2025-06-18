@@ -41,7 +41,7 @@ const createVectorStore = async (documents) => {
 
   const documentChunks = await splitter.splitDocuments(documents);
   
-  const embeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'text-embedding-005' }); // Model used for saving
+  const embeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'gemini-embedding-exp-03-07' });
   return HNSWLib.fromDocuments(
     documentChunks,
     embeddings
@@ -49,10 +49,11 @@ const createVectorStore = async (documents) => {
 };
 
 const loadVectorStoreWithDifferentEmbeddings = async () => {
-  const differentEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'text-embedding-004' }); // Different model used for loading
+  const differentEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'models/embedding-001' });
   const vectorStore = await HNSWLib.load(VECTOR_STORE_INDEX, differentEmbeddings);
   
   const results = await vectorStore.similaritySearch('example query', 5);
+  console.log("Results from vector store with different embeddings:", results);
 };
 
 const processFile = async (filePath) => {

@@ -1,11 +1,11 @@
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI } from '@langchain/google-genai'; // Import Google AI classes
+import { GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { formatDocumentsAsString } from 'langchain/util/document';
 import { RunnablePassthrough, RunnableSequence } from '@langchain/core/runnables';
-import { ConsoleCallbackHandler } from "@langchain/core/tracers/console"; // Importing a built-in callback handler
+import { ConsoleCallbackHandler } from "@langchain/core/tracers/console";
 import 'dotenv/config';
 
 const debugChain = (input) => {
@@ -29,13 +29,13 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 const documents = await splitter.createDocuments([text]);
 
-const googleEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: 'text-embedding-004' });
+const googleEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey });
 
 const googleVectorStore = await MemoryVectorStore.fromDocuments(documents, googleEmbeddings);
 const googleRetriever = googleVectorStore.asRetriever();
 
 const handler = new ConsoleCallbackHandler();
-const googleModel = new ChatGoogleGenerativeAI({ apiKey } );
+const googleModel = new ChatGoogleGenerativeAI({ apiKey, model: "gemini-2.0-flash", } );
 
 const standaloneQuestionTemplate =
   'Transform the following question into a clear and concise standalone question. Original question: {question} Standalone question:';
