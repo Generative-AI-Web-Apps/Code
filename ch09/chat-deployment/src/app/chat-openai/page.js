@@ -12,7 +12,7 @@ const Chat = () => {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useFocusOnSlashPress();
   const { messages, isLoading, handleSubmit, inputValue, setInputValue } = useChatFormSubmit((text) =>
-    getAssistantResponse(text, 'chat-google/api'),
+    getAssistantResponse(text, 'chat-openai/api'),
   );
   const onInputChange = (e) => {
     setInputValue(e.target.value);
