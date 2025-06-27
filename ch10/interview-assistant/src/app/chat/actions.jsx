@@ -160,9 +160,9 @@ export async function continueConversationAndSave(input, sessionId) {
   }
 
   const supportedModel = getSupportedModel('google', 'models/gemini-1.5-pro-latest');
-  
+
   const messages = Array.isArray(session.messages) ? session.messages : [];
-  
+
   const userMessage = {
     id: generateId(),
     role: 'user',
@@ -179,7 +179,7 @@ export async function continueConversationAndSave(input, sessionId) {
   });
 
   const history = getMutableAIState();
-  history.set(updatedMessages);
+  history.update(updatedMessages);
 
   const result = await streamUI({
     model: supportedModel,
@@ -231,18 +231,25 @@ export async function generateInterviewFeedback(sessionId) {
 
   const messages = session.messages || [];
   const prompt = `
-  Please provide comprehensive feedback for this interview.
-      The session contains the following messages:
-      ${messages.map((message) => `${message.role}: ${message.content}`).join('\n')}
+You are an AI interview assistant tasked with providing a structured feedback report for a technical interview.
 
-      Provide a structured feedback summary covering these points:
-      - Overall performance: Assess the candidate's overall performance.
-      - Strengths: Highlight the candidate's strengths demonstrated during the interview.
-      - Areas for improvement: Suggest areas where the candidate could improve.
-      - Technical skills: Evaluate the candidate's technical skills based on their responses.
-      - Communication skills: Assess the candidate's communication skills.
-      - Recommendations: Provide specific recommendations for the candidate.
-  `;
+The session messages are as follows:
+${messages.map((message) => `${message.role}: ${message.content}`).join('\n')}
+
+Instructions:
+- First, check whether the candidate (user) has answered any interview questions. 
+- If no 'user' messages are present or if the candidate hasn't provided any answers, respond with: 
+  "No feedback available. The candidate did not participate in the interview."
+- If answers are present, provide detailed feedback covering:
+  - Overall performance
+  - Strengths
+  - Areas for improvement
+  - Technical skills
+  - Communication skills
+  - Recommendations
+
+Ensure that your feedback only reflects the actual content of the candidate's answers, without assuming details not present in the conversation.
+`;
 
   const supportedModel = getSupportedModel('google', 'models/gemini-1.5-pro-latest');
 
@@ -274,7 +281,7 @@ export const AI = createAI({
     continueConversation,
     continueConversationAndSave,
     createInterviewSession,
-    completeInterviewSession
+    completeInterviewSession,
   },
   initialAIState: [],
   initialUIState: [],
