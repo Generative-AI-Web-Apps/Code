@@ -1,9 +1,9 @@
 'use server';
 
 import { generateId } from 'ai';
-import { ChatOpenAI } from '@langchain/openai';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
 import { createHistoryAwareRetriever } from 'langchain/chains/history_aware_retriever';
 import { createStuffDocumentsChain } from 'langchain/chains/combine_documents';
@@ -23,15 +23,16 @@ class RAG {
   async initialize() {
     if (this.retriever) return;
 
-    this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
-      temperature: 0,
+    this.llm = new ChatGoogleGenerativeAI({
+      apiKey: process.env.GOOGLE_API_KEY,
+      model: 'gemini-1.5-flash',
+      streaming: false,
     });
 
-    const embeddings = new OpenAIEmbeddings({
-      model: 'text-embedding-3-small',
+    const embeddings = new GoogleGenerativeAIEmbeddings({
+      apiKey: process.env.GOOGLE_API_KEY,
+      model: 'models/embedding-001',
     });
-
     const upstashIndex = new Index({
       url: process.env.UPSTASH_VECTOR_REST_URL,
       token: process.env.UPSTASH_VECTOR_REST_TOKEN,
@@ -44,7 +45,7 @@ class RAG {
 
     this.retriever = vectorStore.asRetriever({
       k: 5,
-    })
+    });
 
     const contextualizeQPrompt = ChatPromptTemplate.fromMessages([
       [
@@ -64,7 +65,7 @@ class RAG {
 
   async performRAG(query, chatHistory = []) {
     await this.initialize();
-  
+
     const qaPrompt = ChatPromptTemplate.fromMessages([
       [
         'system',
@@ -78,27 +79,27 @@ class RAG {
       new MessagesPlaceholder('chat_history'),
       ['human', '{input}'],
     ]);
-    
+
     const relevantDocs = await this.historyAwareRetriever.invoke({
       input: query,
       chat_history: chatHistory,
     });
-    
+
     console.log('prompt', qaPrompt);
     console.log('relevantDocs', relevantDocs);
-    
+
     const documentChain = await createStuffDocumentsChain({
       llm: this.llm,
       prompt: qaPrompt,
       documentPrompt: PromptTemplate.fromTemplate('- {page_content}\n'),
     });
-  
+
     const result = await documentChain.invoke({
       input: query,
       chat_history: chatHistory,
       context: relevantDocs, // This needs to match the variable name in the prompt
     });
-  
+
     return {
       answer: result,
       sourceDocuments: relevantDocs,

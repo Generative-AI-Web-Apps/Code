@@ -4,7 +4,7 @@ import path from 'path';
 import { addDocument } from '@/lib/database';
 import { processDocument } from '@/lib/documentProcessing';
 import { UpstashVectorStore } from '@langchain/community/vectorstores/upstash';
-import { OpenAIEmbeddings } from "@langchain/openai";
+import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { Index } from '@upstash/vector';
 import { Document } from '@langchain/core/documents';
 import { existsSync } from 'fs';
@@ -22,10 +22,7 @@ export async function POST(request, { params }) {
     if (!files || files.length === 0) {
       return NextResponse.json({ error: 'No files provided' }, { status: 400 });
     }
-    const embeddings = new OpenAIEmbeddings({
-      model: "text-embedding-3-small",
-    });
-
+    const embeddings = new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GOOGLE_API_KEY, model: 'models/embedding-001' });
     const upstashIndex = new Index({
       url: process.env.UPSTASH_VECTOR_REST_URL,
       token: process.env.UPSTASH_VECTOR_REST_TOKEN,
@@ -76,7 +73,6 @@ export async function POST(request, { params }) {
             new Document({
               pageContent: chunk.content,
               metadata: {
-                ...chunk.metadata,
                 documentId: doc.id,
                 knowledgeBaseId,
                 chunkCount: chunkCount,
@@ -84,7 +80,6 @@ export async function POST(request, { params }) {
               },
             }),
         );
-       
         const chunkIds = chunks.map((_, index) => `${doc.id}-chunk-${index}`);
         await vectorStore.addDocuments(langChainDocs, { ids: chunkIds });
         uploadedDocs.push(doc);
