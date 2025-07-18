@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const dynamic = 'force-dynamic';
 
-const model = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY });
+const model = createGoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function POST(req) {
   const { text } = await req.json();

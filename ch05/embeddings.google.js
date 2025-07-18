@@ -3,9 +3,9 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { embed } from "ai";
 
 async function main() {
-  const apiKey = process.env.GOOGLE_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("Missing GOOGLE_API_KEY environment variable");
+    throw new Error("Missing GEMINI_API_KEY environment variable");
   }
 
   const google = createGoogleGenerativeAI({ apiKey });

@@ -10,7 +10,7 @@ import {
 } from "@langchain/core/runnables";
 import "dotenv/config";
 
-const apiKey = process.env.GOOGLE_API_KEY; // Google API key
+const apiKey = process.env.GEMINI_API_KEY; // Google API key
 
 const text = `Artificial Intelligence (AI) is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Leading AI textbooks define the field as the study of "intelligent agents": any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.
 

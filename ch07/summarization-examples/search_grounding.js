@@ -3,7 +3,7 @@ import {
     GoogleGenerativeAI,
   } from "@google/generative-ai";
   import "dotenv/config";
-const apiKey = process.env.GOOGLE_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
   
   async function searchGrounding() {
     // [START search_grounding]

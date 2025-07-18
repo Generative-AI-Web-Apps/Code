@@ -4,7 +4,7 @@ import { RunnableLambda } from "@langchain/core/runnables";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import "dotenv/config";
 
-const apiKey = process.env.GOOGLE_API_KEY; // Google API key
+const apiKey = process.env.GEMINI_API_KEY; // Google API key
 
 const toUpperCase = (input) => {
   return {

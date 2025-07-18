@@ -9,7 +9,7 @@ import { createFallback } from 'ai-fallback';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 const openAPIKey = process.env.OPENAI_API_KEY;
-const googleAPIKey = process.env.GOOGLE_API_KEY;
+const googleAPIKey = process.env.GEMINI_API_KEY;
 
 const retryableStatusCodes = [429, 500];
 

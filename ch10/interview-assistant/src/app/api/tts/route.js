@@ -4,7 +4,7 @@ import { TextToSpeechClient } from '@google-cloud/text-to-speech';
 import { NextResponse } from 'next/server';
 
 const ttsClient = new TextToSpeechClient({
-  apiKey: process.env.GOOGLE_API_KEY,
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 export async function POST(req) {

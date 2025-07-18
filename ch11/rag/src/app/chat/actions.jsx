@@ -24,13 +24,13 @@ class RAG {
     if (this.retriever) return;
 
     this.llm = new ChatGoogleGenerativeAI({
-      apiKey: process.env.GOOGLE_API_KEY,
+      apiKey: process.env.GEMINI_API_KEY,
       model: 'gemini-1.5-flash',
       streaming: false,
     });
 
     const embeddings = new GoogleGenerativeAIEmbeddings({
-      apiKey: process.env.GOOGLE_API_KEY,
+      apiKey: process.env.GEMINI_API_KEY,
       model: 'models/embedding-001',
     });
     const upstashIndex = new Index({

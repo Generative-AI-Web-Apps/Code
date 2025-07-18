@@ -10,7 +10,7 @@ import fs from 'fs';
 import path from 'path';
 
 import 'dotenv/config';
-const apiKey = process.env.GOOGLE_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
 
 export class RAGSystem {
   constructor(apiKey) {

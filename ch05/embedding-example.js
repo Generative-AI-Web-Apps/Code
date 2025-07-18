@@ -2,13 +2,13 @@ import "dotenv/config";
 import { embed } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-if (!GOOGLE_API_KEY) {
-  throw new Error("Missing GOOGLE_API_KEY environment variable");
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+  throw new Error("Missing GEMINI_API_KEY environment variable");
 }
 
 const google = createGoogleGenerativeAI({
-  apiKey: GOOGLE_API_KEY,
+  apiKey: GEMINI_API_KEY,
 });
 
 const embeddingDB = {};

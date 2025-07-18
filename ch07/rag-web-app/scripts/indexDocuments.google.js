@@ -138,7 +138,7 @@ async function main() {
     .option('-o, --output <path>', 'Output path for vector store', './vector-index')
     .action(async (options) => {
       try {
-        const apiKey = process.env.GOOGLE_API_KEY;
+        const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
           throw new Error('Google AI API Key not found in .env');
         }

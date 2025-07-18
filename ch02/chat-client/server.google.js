@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 const app = express();
 const port = process.env.PORT || 3000;
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const logger = winston.createLogger({
   level: 'info',

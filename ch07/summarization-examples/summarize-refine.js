@@ -5,7 +5,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import "dotenv/config";
 import TokenTracker from "./TokenTracker.js";
 
-const apiKey = process.env.GOOGLE_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
 
 const pdfPath = "docs/tiny-data.pdf";
 const loader = new PDFLoader(pdfPath, { parsedItemSeparator: "" });

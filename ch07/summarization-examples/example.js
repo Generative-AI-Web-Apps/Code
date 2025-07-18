@@ -35,7 +35,7 @@ async function createVectorStore(documents) {
   const documentChunks = await splitter.splitDocuments(documents);
   return HNSWLib.fromDocuments(
     documentChunks,
-    new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GOOGLE_API_KEY })
+    new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GEMINI_API_KEY })
   );
 }
 
@@ -49,7 +49,7 @@ async function handleDocumentUpload(document) {
     console.log("Checking for existing vector store...");
     if (fs.existsSync(VECTOR_STORE_INDEX)) {
       console.log("Loading existing vector store...");
-      vectorStore = await HNSWLib.load(VECTOR_STORE_INDEX, new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GOOGLE_API_KEY }));
+      vectorStore = await HNSWLib.load(VECTOR_STORE_INDEX, new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GEMINI_API_KEY }));
       console.log("Vector store loaded.");
     } else {
       console.log("Creating new vector store...");
@@ -63,7 +63,7 @@ async function handleDocumentUpload(document) {
       const documentChunks = await splitter.splitDocuments(documents);
       vectorStore = await HNSWLib.fromDocuments(
         documentChunks,
-        new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GOOGLE_API_KEY })
+        new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GEMINI_API_KEY })
       );
   
       await vectorStore.save(VECTOR_STORE_INDEX);

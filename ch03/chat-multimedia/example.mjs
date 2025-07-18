@@ -1,6 +1,6 @@
 import { generateText } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-const model = createGoogleGenerativeAI({ apiKey: process.env.GOOGLE_API_KEY });
+const model = createGoogleGenerativeAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const result = await generateText({
   model: model('models/gemini-2.0-flash'),
