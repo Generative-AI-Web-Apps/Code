@@ -1,16 +1,14 @@
-// Import necessary modules
-import OpenAI from 'openai';
-import express from 'express';
-import cors from 'cors';
-import winston from 'winston';
-// Load environment variables from .env file
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import express from "express";
+import cors from "cors";
+import winston from "winston";
 import 'dotenv/config';
-const apiKey = process.env.OPENAI_API_KEY;
+import { v4 as uuidv4 } from 'uuid';
 
-// Check if API key exists
-if (!apiKey) {
-  throw new Error('Missing OPENAI_API_KEY environment variable');
-}
+const app = express();
+const port = process.env.PORT || 3000;
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const logger = winston.createLogger({
   level: 'info',
@@ -18,63 +16,52 @@ const logger = winston.createLogger({
   transports: [new winston.transports.Console({ format: winston.format.simple() })],
 });
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+app.use(express.json());
+app.use(cors());
+app.options('*', cors());
 
-class OpenAIHandler {
-  constructor(openai) {
-    this.openai = openai;
-  }
+app.post('/', async (req, res) => {
+  try {
+    logger.info('Received request:', { body: req.body });
 
-  async handleRequest(req, res) {
-    try {
-      logger.info('Received request:', { body: req.body });
-      await sleep(4000);
-      const { text } = req.body;
-      const { data: completion } = await this.openai.chat.completions
-        .create({
-          messages: [
-            {
-              role: 'system',
-              content: "I'm happy to assist you in any way I can. How can I be of service today?",
-            },
-            { role: 'user', content: text },
-          ],
-          model: 'gpt-3.5-turbo',
-          stop: null,
-          max_tokens: 150,
-        })
-        .withResponse();
-      const message = {
-        id: completion.id, // Include ID
-        created: completion.created,
-        role: 'assistant',
-        content: completion.choices[0].message.content, // Extract content from message
-      };
-      res.json({ message });
-    } catch (e) {
-      logger.error('Internal server error:', { error: e.message });
-      res.status(500).send('Internal server error');
-    }
-  }
-}
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const chat = model.startChat({
+      history: [
+        {
+          role: "user",
+          parts: [{ text: "Hello" }],
+        },
+        {
+          role: "model",
+          parts: [{ text: "I'm happy to assist you in any way I can. How can I be of service today?" }],
+        },
+      ],
+    });
 
-export function createServer() {
-  const openai = new OpenAI({ apiKey });
-  const app = express();
-
-  app.use(express.json());
-  app.use(cors());
-  app.options('*', cors());
-  const openaiProvider = new OpenAIHandler(openai);
-  app.post('/', (req, res) => openaiProvider.handleRequest(req, res));
-  // Global error-handling middleware
-  app.use((err, req, res, next) => {
-    logger.error('Unhandled error:', { error: err.message, stack: err.stack });
+    const { text } = req.body;
+    let result = await chat.sendMessage(text);
+    
+    const responseMessage = result.response.text();
+    logger.info('Response:', { response: responseMessage });
+    const message = {
+      id: uuidv4(), // Include ID
+      created: new Date(),
+      role: 'assistant',
+      content: responseMessage,
+    };
+    res.json({ message });
+  } catch (e) {
+    logger.error('Internal server error:', { error: e.message });
     res.status(500).send('Internal server error');
-  });
-  return app;
-}
+  }
+});
+
+// Global error-handling middleware
+app.use((err, req, res, next) => {
+  logger.error('Unhandled error:', { error: err.message, stack: err.stack });
+  res.status(500).send('Internal server error');
+});
+
+app.listen(port, () => {
+  logger.info(`Server is running on http://localhost:${port}`);
+});

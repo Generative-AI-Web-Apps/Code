@@ -5,19 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "npm run start",
-    "dev:google": "npm run start:google",
+    "dev:openai": "npm run start:openai",
     "server": "node index.js",
-    "server:google": "node server.google.js",
+    "server:openai": "node index.openai.js",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "concurrently \"npm run server\" \"vite\"",
-    "start:google": "concurrently \"npm run server:google\" \"vite\"",
+    "start:openai": "concurrently \"npm run server:openai\" \"vite\"",
     "test:unit": "vitest -c vitest.unit.config.ts",
     "test:e2e": "vitest -c vitest.e2e.config.ts",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@google/generative-ai": "0.24.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.0",
@@ -33,15 +34,15 @@
     "react-resizable-panels": "^2.0.16",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "@google/generative-ai": "0.24.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.2.71",
     "@types/react-dom": "^18.2.22",
     "@types/testing-library__jest-dom": "6.0.0",
-    "@testing-library/jest-dom": "^6.4.2",
-    "jsdom": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "@vitejs/plugin-react": "^4.2.1",
@@ -54,17 +55,15 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-  
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
+    "superagent": "^8.1.2",
     "tailwindcss": "^3.4.1",
     "tw-elements": "^1.0.0-beta2",
+    "typescript": "^5.2.2",
     "vite": "^5.2.6",
     "vitest": "^1.4.0",
-    "typescript": "^5.2.2",
-    "@testing-library/react": "^14.2.2",
-    "@testing-library/user-event": "^14.5.2",
-    "superagent": "^8.1.2",
     "winston": "^3.14.2"
   }
 }

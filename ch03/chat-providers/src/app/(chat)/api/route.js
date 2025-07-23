@@ -20,11 +20,7 @@ export async function POST(req) {
       ...messages,
     ],
   });
-  const stream = result.toDataStream({
-    onFinal(_) {
-      data.close();
-    },
-  });
+  const stream = result.toDataStream();
 
   return new Response(stream, {
     status: 200,
