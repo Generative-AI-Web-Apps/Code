@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { google  } from '@ai-sdk/google';
+import { google } from '@ai-sdk/google';
 
 import { generateObject } from "ai";
 

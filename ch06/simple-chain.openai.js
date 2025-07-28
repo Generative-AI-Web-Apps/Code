@@ -18,7 +18,7 @@ const vowelCountFunction = (input) => {
   };
 };
 const model = new ChatOpenAI({ openAIApiKey: apiKey, model: "gpt-4o" });
-const prompt = ChatPromptTemplate.fromTemplate("Print this number twice: {vowelCount}");
+const prompt = ChatPromptTemplate.fromTemplate("Show the number {vowelCount} two times.");
 const chain = RunnableLambda.from(toUpperCase)
   .pipe(RunnableLambda.from(vowelCountFunction))
   .pipe(prompt)

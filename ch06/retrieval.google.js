@@ -1,5 +1,8 @@
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI } from "@langchain/google-genai"; // Import Google AI classes
+import {
+  GoogleGenerativeAIEmbeddings,
+  ChatGoogleGenerativeAI,
+} from "@langchain/google-genai"; // Import Google AI classes
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
@@ -25,17 +28,39 @@ const splitter = new RecursiveCharacterTextSplitter({
 
 const documents = await splitter.createDocuments([text]);
 
-const googleEmbeddings = new GoogleGenerativeAIEmbeddings({ apiKey, model: "text-embedding-004" });
+const googleEmbeddings = new GoogleGenerativeAIEmbeddings({
+  apiKey,
+  model: "text-embedding-004",
+});
 
-const googleVectorStore = await MemoryVectorStore.fromDocuments(documents, googleEmbeddings);
+// Initialize MemoryVectorStore from an array of texts
+const vectorStore = await MemoryVectorStore.fromTexts(
+  ["Hello world", "Bye bye", "hello nice world"],
+  [{ id: 2 }, { id: 1 }, { id: 3 }],
+  googleEmbeddings
+);
+
+// Perform a similarity search
+// #D Search for the text "hello world" and retrieve the top 1 most similar document
+console.log(await vectorStore.similaritySearch("hello world", 1));
+
+const googleVectorStore = await MemoryVectorStore.fromDocuments(
+  documents,
+  googleEmbeddings
+);
 const googleRetriever = googleVectorStore.asRetriever();
 
-const googleModel = new ChatGoogleGenerativeAI({ apiKey });
+const googleModel = new ChatGoogleGenerativeAI({
+  apiKey,
+  model: "gemini-2.0-flash",
+});
 
 const standaloneQuestionTemplate =
   "Transform the following question into a clear and concise standalone question. Original question: {question} Standalone question:";
 
-const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate);
+const standaloneQuestionPrompt = PromptTemplate.fromTemplate(
+  standaloneQuestionTemplate
+);
 
 const answerTemplate = `You are a friendly and knowledgeable assistant specializing in Artificial Intelligence. Based on the provided context, please answer the following question. If the answer is not found in the context, respond with: "I'm sorry, I don't have that information." Always aim for a conversational tone.
 Context: {context}
@@ -52,7 +77,9 @@ const retrieverChainGoogle = RunnableSequence.from([
   googleRetriever,
   formatDocumentsAsString,
 ]);
-const answerChainGoogle = answerPrompt.pipe(googleModel).pipe(new StringOutputParser());
+const answerChainGoogle = answerPrompt
+  .pipe(googleModel)
+  .pipe(new StringOutputParser());
 const chainGoogle = RunnableSequence.from([
   {
     standalone_question: standaloneQuestionChainGoogle,
@@ -70,5 +97,7 @@ console.log(
   await chainGoogle.invoke({ question: "What is artificial intelligence?" })
 );
 console.log(
-  await chainGoogle.invoke({ question: "What is the exact date of the first human landing on Mars?" })
+  await chainGoogle.invoke({
+    question: "What is the exact date of the first human landing on Mars?",
+  })
 );

@@ -1,7 +1,7 @@
 export async function streamComponent(input, history) {
   "use server";
   const result = await streamUI({
-    model: openai("gpt-3.5-turbo"),
+    model: google("models/gemini-2.0-flash"),
     messages: [...history, { role: "user", content: input }],
     text: ({ content, done }) => {
       return (

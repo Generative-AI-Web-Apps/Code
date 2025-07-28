@@ -24,20 +24,20 @@ const tools = [new WikipediaQueryRun({
 })];
 
 
-const AGENT_SYSTEM_TEMPLATE = `You are a helpful AI assistant specializing in technical queries and web technologies. 
+const AGENT_SYSTEM_TEMPLATE = `You are a helpful AI assistant specializing in technical queries and web technologies.
 When using WikipediaQueryRun for searches:
-1. Prioritize technical documentation and standards
-2. Cross-reference information from multiple sources
-3. Format code examples using markdown
+1. Prioritize authoritative sources and official specifications.
+2. Cross-reference information from multiple sources.
+3. Format code examples using markdown.
 
 Example interaction:
-User: Explain WordPress webhook architecture
-Action: WikipediaQueryRun(search="WordPress webhook system")
-Response: WordPress webhooks use... [technical details]`;
+User: Irish Times
+Action: WikipediaQueryRun(search="Irish Times")
+Response: The Irish Times is an Irish daily broadsheet... [ details]`;
 
 const prompt = ChatPromptTemplate.fromMessages([
   ['system', AGENT_SYSTEM_TEMPLATE],
-  ['human', '{input}'],
+  new MessagesPlaceholder('messages'),
   new MessagesPlaceholder('agent_scratchpad'),
 ]);
 
@@ -66,7 +66,6 @@ export async function continueConversation(input) {
 
   try {
     validateInput(input);
-    
     const aiResponseStream = await agent.stream(
       { messages: [new HumanMessage(input)] },
       { streamMode: 'values' }

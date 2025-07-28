@@ -4,7 +4,7 @@ import { RunnableLambda } from "@langchain/core/runnables";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import "dotenv/config";
 
-const apiKey = process.env.GEMINI_API_KEY; // Google API key
+const apiKey = process.env.GEMINI_API_KEY;
 
 const toUpperCase = (input) => {
   return {
@@ -24,10 +24,7 @@ const model = new ChatGoogleGenerativeAI({
   model: "gemini-2.0-flash",
 });
 
-const prompt = ChatPromptTemplate.fromTemplate(
-  "Print this number twice: {vowelCount}"
-);
-
+const prompt = ChatPromptTemplate.fromTemplate("Show the number {vowelCount} two times.");
 const chain = RunnableLambda.from(toUpperCase)
   .pipe(RunnableLambda.from(vowelCountFunction))
   .pipe(prompt)

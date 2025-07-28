@@ -34,6 +34,15 @@ const splitter = new RecursiveCharacterTextSplitter({
 const documents = await splitter.createDocuments([text]);
 const embeddings = new OpenAIEmbeddings({ apiKey });
 
+// Initialize MemoryVectorStore from an array of texts
+const vectorStore1 = await MemoryVectorStore.fromTexts(
+  ["Hello world", "Bye bye", "hello nice world"],
+  [{ id: 2 }, { id: 1 }, { id: 3 }],
+  embeddings
+);
+
+console.log(await vectorStore1.similaritySearch("hello world", 1));
+
 const vectorStore = await MemoryVectorStore.fromDocuments(
   documents,
   embeddings
@@ -82,5 +91,7 @@ console.log(
   await chain.invoke({ question: "What is artificial intelligence?" })
 );
 console.log(
-  await chain.invoke({ question: "What is the exact date of the first human landing on Mars?" })
+  await chain.invoke({
+    question: "What is the exact date of the first human landing on Mars?",
+  })
 );
