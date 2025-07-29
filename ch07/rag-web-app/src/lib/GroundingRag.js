@@ -9,7 +9,7 @@ import { DynamicRetrievalMode } from '@google/generative-ai';
 export class RAG {
   constructor(apiKey, options = {}) {
     if (!apiKey) {
-      throw new Error('Google API Key is required');
+      throw new Error('Gemini API Key is required');
     }
 
     this.embeddings = new GoogleGenerativeAIEmbeddings({ apiKey });
@@ -55,7 +55,7 @@ export class RAG {
 
     // Modify the LLM to include web search retrieval
     this.groundedLLM = new ChatGoogleGenerativeAI({
-      model: 'gemini-1.5-pro',
+      model: 'gemini-2.0-flash',
       temperature: 0,
       maxRetries: 0,
     }).bindTools([this.searchRetrievalTool]);

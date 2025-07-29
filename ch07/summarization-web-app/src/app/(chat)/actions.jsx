@@ -8,16 +8,16 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { Document } from "@langchain/core/documents";
+
 const apiKey = process.env.GEMINI_API_KEY;
 
-// Initialize the model
 const model = new ChatGoogleGenerativeAI({
   apiKey: apiKey,
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
   streaming: false,
 });
 
-// Function to normalize documents
 const normalizeDocuments = (docs) => {
   return docs.map(doc => ({
     ...doc,
@@ -25,7 +25,6 @@ const normalizeDocuments = (docs) => {
   }));
 };
 
-// Function to handle file processing
 const processFile = async (fileBlob, fileType) => {
   let loader;
   
@@ -43,16 +42,16 @@ const processFile = async (fileBlob, fileType) => {
 
 const summarizeDocs = async (docs) => {
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1500,
+    chunkSize: 10000,
     chunkOverlap: 200,
   });
 
   const splitDocs = await splitter.splitDocuments(normalizeDocuments(docs));
-  
-  // Load and run the summarization chain
+
   const chain = loadSummarizationChain(model, {
     type: "map_reduce",
     verbose: true,
+    returnIntermediateSteps: false,
   });
 
   const result = await chain.invoke({
@@ -64,10 +63,10 @@ const summarizeDocs = async (docs) => {
 
 // Function to handle text summarization
 const summarizeText = async (text) => {
-  return summarizeDocs([text]);
+  const doc = new Document({ pageContent: text });
+  return summarizeDocs([doc]);
 };
 
-// Main function to handle conversation continuation
 export async function continueConversation(input) {
   const aiState = getMutableAIState();
 
@@ -109,7 +108,6 @@ export async function continueConversation(input) {
   }
 }
 
-// Create AI instance with actions
 export const AI = createAI({
   actions: {
     continueConversation,

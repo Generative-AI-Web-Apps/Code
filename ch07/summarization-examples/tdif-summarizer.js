@@ -161,7 +161,7 @@ export class DocumentSummarizer {
 
     // Build summary
     const summary = topSentences
-      .sort((a, b) => a.index - b.index)  // Restore original order
+      .sort((a, b) => a.index - b.index)
       .map(score => allSentences[score.index])
       .join(' ');
 

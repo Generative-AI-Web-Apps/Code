@@ -32,7 +32,7 @@ const loadDocumentsFromFile = async (filePath) => {
 
 const createVectorStore = async (documents) => {
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1500,
+    chunkSize: 10000,
     chunkOverlap: 200,
   });
 

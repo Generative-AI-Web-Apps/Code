@@ -3,10 +3,10 @@
 import { generateId } from 'ai';
 import ChatBubble from '../../components/chat/ChatBubble';
 import { getMutableAIState, createAI } from 'ai/rsc';
-// import { RAG } from '@/lib/RAG';
-import { LogProbsRag as RAG } from '@/lib/LogPropsRag';
+import { RAG } from '@/lib/RAG';
+// import { LogProbsRag as RAG } from '@/lib/LogPropsRag';
 import { getAbsoluteRAGIndexPath } from '@/lib/utils';
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY;
 
 let ragSystem;
 export async function initializeRAG() {
@@ -23,22 +23,21 @@ export async function continueConversation(input) {
   const aiState = getMutableAIState();
 
   try {
-    // Ensure RAG system is initialized
     const rag = await initializeRAG();
 
-    // // Perform enhanced RAG query
-    // const result = await rag.performRAG(
-    //   input,
-    // );
-
-    // Perform enhanced RAG query
-    const result = await rag.performEnhancedRAG(
+    // Perform RAG query
+    const result = await rag.performRAG(
       input,
-      {
-        confidenceThreshold: 85,
-        fallbackStrategy: 'ask_user'
-      }
     );
+
+    // // Perform enhanced RAG query
+    // const result = await rag.performEnhancedRAG(
+    //   input,
+    //   {
+    //     confidenceThreshold: 85,
+    //     fallbackStrategy: 'ask_user'
+    //   }
+    // );
     
     // Log confidence metrics if available
     if (result.confidenceMetrics) {

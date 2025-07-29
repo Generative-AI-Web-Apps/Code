@@ -8,9 +8,13 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import 'dotenv/config';
 const apiKey = process.env.GEMINI_API_KEY;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class RAGSystem {
   constructor(apiKey) {
@@ -34,7 +38,7 @@ class RAGSystem {
   async indexDocuments(documentDirectory) {
     const documents = [];
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 10000,
       chunkOverlap: 200,
     });
 
@@ -114,7 +118,8 @@ const formatDocs = (docs) => {
 
 async function main() {
   const rag = new RAGSystem(apiKey);
-  const indexPath = './rag_index';
+  const documentDirectory = path.join(__dirname, './corpus');
+  const indexPath = path.join(__dirname, './rag_index');
 
   // Check if index already exists
   if (fs.existsSync(indexPath)) {
@@ -122,16 +127,13 @@ async function main() {
     await rag.loadIndex(indexPath);
   } else {
     console.log('No existing index. Creating new index...');
-    await rag.indexDocuments('./corpus');
+    await rag.indexDocuments(documentDirectory);
     await rag.saveIndex(indexPath);
   }
 
-  // Perform RAG query
   const result = await rag.performRAG('What is NTSB?');
   console.log(result.answer);
 
-  // Optional: Interactive query loop
-  // You can add a readline or prompt interface here for continuous querying
 }
 
 main().catch(console.error);

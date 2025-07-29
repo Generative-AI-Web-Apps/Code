@@ -14,7 +14,6 @@ class DocumentIndexer {
   textSplitter;
 
   constructor(apiKey) {
-    // Initialize embeddings model
     this.embeddings = new OpenAIEmbeddings({
       apiKey,
       model: 'text-embedding-3-small',
@@ -22,7 +21,7 @@ class DocumentIndexer {
     });
 
     this.textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 3000,
       chunkOverlap: 200,
       separators: [
         '\n\n', // Primary separator
@@ -39,19 +38,13 @@ class DocumentIndexer {
    */
   async processDocument(filePath) {
     try {
-      // Load PDF document
       const loader = new PDFLoader(filePath, {
         splitPages: true,
         parsedItemSeparator: '\n',
       });
 
-      // Load raw documents
       const rawDocs = await loader.load();
-
-      // Split documents into semantic chunks
       const splitDocs = await this.textSplitter.splitDocuments(rawDocs);
-
-      // Enhance documents with metadata
       return splitDocs.map(
         (doc) =>
           new Document({
@@ -77,19 +70,16 @@ class DocumentIndexer {
   async indexDocumentsFromDirectory(documentDirectory) {
     const documents = [];
 
-    // Find all PDF files in the directory
     const pdfFiles = fs
       .readdirSync(documentDirectory)
       .filter((file) => path.extname(file).toLowerCase() === '.pdf')
       .map((file) => path.join(documentDirectory, file));
 
-    // Process each PDF document
     for (const filePath of pdfFiles) {
       const processedDocs = await this.processDocument(filePath);
       documents.push(...processedDocs);
     }
 
-    // Create vector store from processed documents
     const vectorStore = await HNSWLib.fromDocuments(documents, this.embeddings);
 
     console.log(`Indexed ${documents.length} document chunks from ${pdfFiles.length} documents`);
@@ -127,7 +117,6 @@ class DocumentIndexer {
 
 export default DocumentIndexer;
 
-// Load environment variables
 dotenv.config();
 
 async function main() {
@@ -142,21 +131,15 @@ async function main() {
         if (!apiKey) {
           throw new Error('OPENAI_API_KEY Key not found in .env');
         }
-
-        // Validate input directory
         const inputDir = path.resolve(options.directory);
         if (!fs.existsSync(inputDir)) {
           throw new Error(`Directory not found: ${inputDir}`);
         }
 
-        // Create indexer
         const indexer = new DocumentIndexer(apiKey);
-
-        // Index documents
         console.log(`Indexing documents from: ${inputDir}`);
         const vectorStore = await indexer.indexDocumentsFromDirectory(inputDir);
 
-        // Save vector store
         const outputPath = path.resolve(options.output);
         await indexer.saveVectorStore(vectorStore, outputPath);
 
@@ -167,7 +150,6 @@ async function main() {
       }
     });
 
-  // Parse CLI arguments
   await program.parseAsync(process.argv);
 }
 

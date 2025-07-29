@@ -8,14 +8,14 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 export class RAG {
   constructor(apiKey) {
     if (!apiKey) {
-      throw new Error('Google API Key is required');
+      throw new Error('Gemini API Key is required');
     }
 
     this.embeddings = new GoogleGenerativeAIEmbeddings({ apiKey });
 
     this.llm = new ChatGoogleGenerativeAI({
       apiKey,
-      model: 'gemini-1.5-flash-002',
+      model: 'gemini-2.0-flash',
       streaming: false,
       logprobs: true,
     });

@@ -3,7 +3,7 @@ class TokenTracker {
     this.totalInputTokens = 0;
     this.totalOutputTokens = 0;
     this.totalExecutionTokens = 0;
-    this.lastTotalTokens = 0; // To keep track of the last total tokens used
+    this.lastTotalTokens = 0;
   }
 
   updateTokens(usageMetadata) {

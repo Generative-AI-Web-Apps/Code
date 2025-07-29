@@ -32,7 +32,7 @@ export default function Home() {
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
-    setSelectedFile(null); // Clear any selected file when typing
+    setSelectedFile(null);
   };
 
   const handleFileChange = async (event) => {

@@ -14,15 +14,14 @@ class DocumentIndexer {
   textSplitter;
 
   constructor(apiKey) {
-    // Initialize embeddings model
     this.embeddings = new GoogleGenerativeAIEmbeddings({
       apiKey,
-      model: 'gemini-1.5-flash-002',
+      model: 'text-embedding-004',
       streaming: false,
     });
 
     this.textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 3000,
       chunkOverlap: 200,
       separators: [
         '\n\n', // Primary separator
@@ -127,7 +126,6 @@ class DocumentIndexer {
 
 export default DocumentIndexer;
 
-// Load environment variables
 dotenv.config();
 
 async function main() {
@@ -142,21 +140,14 @@ async function main() {
         if (!apiKey) {
           throw new Error('Google AI API Key not found in .env');
         }
-
-        // Validate input directory
         const inputDir = path.resolve(options.directory);
         if (!fs.existsSync(inputDir)) {
           throw new Error(`Directory not found: ${inputDir}`);
         }
-
-        // Create indexer
         const indexer = new DocumentIndexer(apiKey);
-
-        // Index documents
         console.log(`Indexing documents from: ${inputDir}`);
         const vectorStore = await indexer.indexDocumentsFromDirectory(inputDir);
 
-        // Save vector store
         const outputPath = path.resolve(options.output);
         await indexer.saveVectorStore(vectorStore, outputPath);
 
@@ -167,7 +158,6 @@ async function main() {
       }
     });
 
-  // Parse CLI arguments
   await program.parseAsync(process.argv);
 }
 
