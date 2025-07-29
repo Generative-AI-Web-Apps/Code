@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "test:vercel:ai": "jest",
+    "test:vercel:ai": "jest --testPathPattern=vercel-ai",
     "test": "jest"
   },
   "dependencies": {

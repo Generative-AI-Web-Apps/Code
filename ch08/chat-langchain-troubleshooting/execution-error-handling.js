@@ -14,7 +14,7 @@ const debugChain = (input) => {
   return input;
 };
 
-const apiKey = process.env.GEMINI_API_KEY; // Google API key
+const apiKey = process.env.GEMINI_API_KEY; // Gemini API key
 
 const text = `Artificial Intelligence (AI) is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Leading AI textbooks define the field as the study of "intelligent agents": any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals.
 
@@ -23,7 +23,7 @@ As machines become increasingly capable, tasks considered to require "intelligen
 AI applications include advanced web search engines, recommendation systems, understanding human speech (natural language processing), self-driving cars, and competing at a high level in strategic game systems like chess and Go.`;
 
 const splitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 100,
+  chunkSize: 300,
   chunkOverlap: 20,
 });
 
