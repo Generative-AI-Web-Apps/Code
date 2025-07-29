@@ -42,7 +42,6 @@ const summarizeChain = loadSummarizationChain(model, {
   verbose: true,
 });
 
-// Call the summarization chain
 const summary = await summarizeChain.invoke({
     input_documents: docsSummary,
 });
@@ -59,20 +58,12 @@ function normalizeDocuments(docs) {
       } else if (Array.isArray(doc.pageContent)) {
         pageContent = doc.pageContent.join("\n");
       }
-      // Perform cleanup operations on the page content
       if (pageContent) {
   
-        // Trim whitespace
         pageContent = pageContent.trim();
-  
-        // Remove unwanted characters (e.g., figure references)
         pageContent = pageContent.replace(/Figure \d+:.*?\n/g, '').replace(/−\d+\n/g, '');
-  
-        // Normalize spaces
         pageContent = pageContent.replace(/\s+/g, ' ');
         pageContent = pageContent.replace(/(\s*l\s*){2,}/g, ' ');
-  
-        // Filter out non-content lines (example)
         const filteredDocument = pageContent.split('\n').filter(line => 
           !line.includes('References') && !line.includes('Acknowledgments')
         )[0];
@@ -81,6 +72,6 @@ function normalizeDocuments(docs) {
       }
   
       return null; 
-    }).filter(doc => doc !== null && doc.pageContent != []); // Filter out any null entries from the result
+    }).filter(doc => doc !== null && doc.pageContent != []);
   }
   

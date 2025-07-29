@@ -36,7 +36,6 @@ const apiKey = process.env.GEMINI_API_KEY;
     // [END search_grounding]
   }
   async function runAll() {
-    // Comment out or delete any sample cases you don't want to run.
     await searchGrounding();
   }
   
