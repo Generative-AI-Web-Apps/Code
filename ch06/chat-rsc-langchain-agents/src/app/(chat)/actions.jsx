@@ -82,7 +82,7 @@ export async function continueConversation(input) {
         stream.update(
           <ChatBubble 
             role="assistant" 
-            text="Searching technical resources..." 
+            text="Searching for information..." 
             className="mr-auto border-none italic"
           />
         );
