@@ -27,7 +27,8 @@
     "ch08/*",
     "ch09/*",
     "ch10/*",
-    "ch11/*"
+    "ch11/*",
+    "starter-project/*"
   ],
   "dependencies": {
     "hnswlib-node": "^3.0.0"
