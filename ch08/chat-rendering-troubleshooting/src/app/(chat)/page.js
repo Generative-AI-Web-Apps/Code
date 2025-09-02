@@ -21,7 +21,7 @@ export const maxDuration = 30;
 
 const providers = [
   { value: 'openai', label: 'OpenAI' },
-  { value: 'google', label: 'Google AI' },
+  { value: 'gemini', label: 'Google AI' },
 ];
 
 const models = {
@@ -29,7 +29,7 @@ const models = {
     { value: 'gpt-3.5-turbo', label: 'GPT-3.5-turbo' },
     { value: 'gpt-4', label: 'GPT-4' },
   ],
-  google: [{ value: 'models/gemini-2.0-flash', label: 'Gemini' }],
+  gemini: [{ value: 'models/gemini-2.5-flash', label: 'Gemini' }],
 };
 
 export default function Home() {

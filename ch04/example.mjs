@@ -18,7 +18,7 @@ async function generateProductList(prompt) {
   const {
     object: { products },
   } = await generateObject({
-    model: google("models/gemini-2.0-flash"),
+    model: google("models/gemini-2.5-flash"),
 
     schema: z.object({
       products: ProductListSchema,

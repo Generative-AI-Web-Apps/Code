@@ -35,7 +35,8 @@ const tools = [
 ];
 
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-2.0-flash",
+  apiKey,
+  model: "gemini-2.5-flash",
   tools,
 });
 

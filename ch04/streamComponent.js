@@ -1,7 +1,7 @@
 export async function streamComponent(input, history) {
   "use server";
   const result = await streamUI({
-    model: google("models/gemini-2.0-flash"),
+    model: google("models/gemini-2.5-flash"),
     messages: [...history, { role: "user", content: input }],
     text: ({ content, done }) => {
       return (

@@ -22,7 +22,7 @@ List some popular programming languages along with a brief description of each:
 4.`;
 
   const response = await generateText({
-    model: model("models/gemini-2.0-flash"),
+    model: model("models/gemini-2.5-flash"),
     prompt: prompt,
     maxTokens: 512,
   });

@@ -35,9 +35,9 @@ export async function continueConversation(input, provider, model) {
   };
 }
 
-export async function generateProductList(prompt) {
+export async function generateProductList(prompt, provider, model) {
   'use server';
-  const supportedModel = getSupportedModel('google', 'models/gemini-2.0-flash');
+  const supportedModel = getSupportedModel(provider, model);
   const {
     object: { products },
   } = await generateObject({

@@ -6,9 +6,9 @@ const supportedProviders = {
     constructor: createOpenAI,
     models: ['gpt-3.5-turbo', 'gpt-4'],
   },
-  google: {
+  gemini: {
     constructor: createGoogleGenerativeAI,
-    models: ['models/gemini-1.5-pro-latest'],
+    models: ['models/gemini-2.5-flash'],
   },
 };
 

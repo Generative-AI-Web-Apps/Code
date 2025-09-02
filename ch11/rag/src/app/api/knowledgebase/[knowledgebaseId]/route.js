@@ -5,7 +5,6 @@ export async function DELETE(request, { params }) {
   try {
     const { knowledgebaseId } = params;
     console.log('Deleting knowledge base with ID:', knowledgebaseId);
-    // Delete the knowledge base and all associated documents and chat sessions
     await deleteKnowledgeBase(knowledgebaseId);
 
     return NextResponse.json({ success: true });

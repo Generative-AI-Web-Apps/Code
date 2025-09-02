@@ -21,7 +21,7 @@ const vowelCountFunction = (input) => {
 
 const model = new ChatGoogleGenerativeAI({
   apiKey,
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
 });
 
 const prompt = ChatPromptTemplate.fromTemplate("Show the number {vowelCount} two times.");

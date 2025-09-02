@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 class RAGSystem {
   constructor(apiKey) {
     if (!apiKey) {
-      throw new Error('Google API Key is required');
+      throw new Error('Gemini API Key is required');
     }
 
     // Configure embeddings and language model

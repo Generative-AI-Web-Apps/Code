@@ -14,7 +14,7 @@ export async function POST(req) {
     const result = await generateText({
       system: "I'm happy to assist you in any way I can. How can I be of service today?",
       prompt: text,
-      model: model('gemini-2.0-flash'),
+      model: model('gemini-2.5-flash'),
       maxTokens: 512,
     });
     const message = {

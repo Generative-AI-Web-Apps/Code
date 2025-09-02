@@ -11,7 +11,7 @@ export async function POST(req) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: model('gemini-2.0-flash'),
+    model: model('gemini-2.5-flash'),
     maxTokens: 512,
     messages: [
       {

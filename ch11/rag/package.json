@@ -30,7 +30,7 @@
     "docx-parser": "^0.2.1",
     "langchain": "^0.3.29",
     "lucide-react": "^0.525.0",
-    "next": "14.2.27",
+    "next": "15.5.2",
     "openai": "4.94.0",
     "pdf-parse": "^1.1.1",
     "react": "^18.2",

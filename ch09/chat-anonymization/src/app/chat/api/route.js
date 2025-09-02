@@ -10,7 +10,7 @@ export async function POST(req) {
   const { text } = await req.json();
 
   const result = await generateText({
-    model: model('models/gemini-2.0-flash'),
+    model: model('models/gemini-2.5-flash'),
     maxTokens: 512,
     messages: [
       {

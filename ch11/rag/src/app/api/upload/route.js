@@ -45,17 +45,13 @@ export async function POST(request, { params }) {
         if (!fileData) {
           continue;
         }
-
-        // In Node.js, we check the properties of the formData file object
         const fileName = fileData.name;
         const fileType = fileData.type;
         const fileSize = fileData.size;
 
-        // Get file buffer from FormData entry
         const bytes = await fileData.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Save file to disk
         const filePath = path.join(uploadsDir, fileName);
         await writeFile(filePath, buffer);
 

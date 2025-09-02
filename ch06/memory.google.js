@@ -32,7 +32,7 @@ pastMessages.push(
   )
 );
 
-const llm = new ChatGoogleGenerativeAI({ apiKey, model: "gemini-2.0-flash" });
+const llm = new ChatGoogleGenerativeAI({ apiKey, model: "gemini-2.5-flash" });
 const memory = new BufferMemory({
   chatHistory: new ChatMessageHistory(pastMessages),
 });

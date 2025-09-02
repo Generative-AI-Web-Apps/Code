@@ -14,7 +14,7 @@ import DeleteButton from './DeleteButton';
 import DocumentList from './DocumentList';
 
 export default async function KnowledgeBasePage({ params }) {
-  const { id } = params;
+  const { id } = await params;
   const fullId = decodeURIComponent(id);
   const knowledgeBase = await getKnowledgeBase(fullId);
   if (!knowledgeBase) {
