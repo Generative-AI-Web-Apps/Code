@@ -28,6 +28,7 @@
     "ch09/*",
     "ch10/*",
     "ch11/*",
+    "ch12/*",
     "starter-project/*"
   ],
   "dependencies": {

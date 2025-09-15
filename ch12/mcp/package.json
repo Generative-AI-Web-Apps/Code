@@ -1,0 +1,15 @@
+{
+  "name": "mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "mcp-inspector node src/mcp.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "zod": "^3.24.2",
+    "@google/genai": "^1.19.0",
+    "dotenv": "^16.3.1"
+  }
+}
