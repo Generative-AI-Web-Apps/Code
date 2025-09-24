@@ -1,13 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import "dotenv/config";
-
-// Initialize the Google Generative AI client
-const googleAI = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_API_KEY,
-});
 
 // Create server instance
 const server = new McpServer({

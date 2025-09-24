@@ -51,7 +51,6 @@ const Chat = () => {
     content: normalizeMessageParts(msg.parts),
   }));
 
-  console.debug('Normalized chat messages:', normalizedMessages);
   return (
     <div className="flex flex-col w-full max-w-4xl mx-auto py-24 stretch">
       {normalizedMessages.length === 0 && (
