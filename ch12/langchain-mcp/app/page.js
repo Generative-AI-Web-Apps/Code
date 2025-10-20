@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { DefaultChatTransport } from "ai";
 import { useChat } from "@ai-sdk/react";
-import NumberFactCard from "@/components/NumberFactCard";
+import ChuckNorrisFactCard from "@/components/ChuckNorrisFactCard";
 
 function getMessageContent(msg) {
   if (!msg.parts) return "";
@@ -13,7 +13,7 @@ function getMessageContent(msg) {
   }
 
   return msg.parts
-    .filter((p) => p.type === "data-number-fact" && !p.id.endsWith("-user"))
+    .filter((p) => p.type === "data-norris-fact" && !p.id.endsWith("-user"))
     .map((p) => p.data?.content)
     .filter(Boolean)
     .join("\n");
@@ -24,8 +24,8 @@ export default function ChatPage() {
   const { messages, sendMessage, isLoading } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
     onData: (dataPart) => {
-      if (dataPart.type === "data-number-fact") {
-        console.trace("number fact:", dataPart.data);
+      if (dataPart.type === "data-norris-fact") {
+        console.trace("norris fact:", dataPart.data);
       }
     },
   });
@@ -63,7 +63,7 @@ export default function ChatPage() {
           }
 
           return content ? (
-            <NumberFactCard key={msg.id} fact={content} />
+            <ChuckNorrisFactCard key={msg.id} fact={content} />
           ) : (
             <div
               key={msg.id}

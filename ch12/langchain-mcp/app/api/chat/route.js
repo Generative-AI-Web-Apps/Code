@@ -62,7 +62,7 @@ function streamMessages(normalizedMessage, aiMessage) {
       const userId = generateUniqueId();
       console.log("[STREAM] User message:", userId, normalizedMessage);
       writer.write({
-        type: "data-number-fact",
+        type: "data-norris-fact",
         data: { content: normalizedMessage },
         id: userId,
       });
@@ -85,7 +85,7 @@ function streamMessages(normalizedMessage, aiMessage) {
       const aiId = generateUniqueId();
       console.log("[STREAM] AI message:", aiId, aiContent);
       writer.write({
-        type: "data-number-fact",
+        type: "data-norris-fact",
         data: { content: aiContent },
         id: aiId,
       });

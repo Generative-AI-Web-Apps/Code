@@ -1,43 +1,42 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 
+// Create server instance
 const server = new McpServer({
-  name: 'numbers',
-  version: '1.0.0',
+  name: "chuck-norris-mcp",
+  version: "1.0.0",
 });
 
-// Tool: get-number-fact
+// Register joke tool
 server.tool(
-  'get-number-fact',
-  'Get an interesting fact about a number',
-  {
-    number: z.number(),
-  },
-  async ({ number }) => {
+  "get-chuck-joke",
+  "Fetch a random Chuck Norris joke",
+  {},
+  async () => {
     try {
-      const response = await fetch(`http://numbersapi.com/${number}`);
+      const response = await fetch("https://api.chucknorris.io/jokes/random");
       if (!response.ok) {
-        return { content: [{ type: 'text', text: `Failed to retrieve a fact for ${number}` }] };
+        return {
+          content: [{ type: "text", text: `No joke available at the moment.` }],
+        };
       }
-
-      const fact = await response.text();
-
-      return { content: [{ type: 'text', text: fact }] };
-    } catch (error) {
-      console.error('[ERROR] Failed to fetch number fact:', error);
-      return { content: [{ type: 'text', text: `Error fetching fact for ${number}` }] };
+      const data = await response.json();
+      return { content: [{ type: "text", text: data.value }] };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An unknown error occurred";
+      return { content: [{ type: "text", text: `Error fetching joke: ${message}` }] };
     }
-  },
+  }
 );
 
+// Start the server
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.log('Numbers MCP Server running on stdio');
+  console.error("Chuck Norris MCP Server running on stdio");
 }
 
 main().catch((error) => {
-  console.error('Fatal error in main():', error);
+  console.error("Fatal error in main():", error);
   process.exit(1);
 });

@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "mcp-inspector node src/mcp.js"
+    "dev": "npx @modelcontextprotocol/inspector node src/mcp.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.18.0",

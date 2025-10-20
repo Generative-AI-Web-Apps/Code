@@ -4,84 +4,149 @@ import { z } from "zod";
 
 // Create server instance
 const server = new McpServer({
-  name: "numbers-mcp",
+  name: "chuck-norris-mcp",
   version: "1.0.0",
 });
 
-// Register number fact tool
+// Tool: Fetch a random joke
 server.tool(
-  "get-number-fact",
-  "Fetch an interesting fact about a number",
-  {
-    number: z.number().describe("The number to get a fact about"),
-  },
-  async ({ number }) => {
-    console.error(`[MCP TOOL] get-number-fact called with number: ${number}`);
+  "get-chuck-joke",
+  "Fetch a random Chuck Norris joke",
+  {},
+  async () => {
     try {
-      const response = await fetch(`http://numbersapi.com/${number}`);
+      const response = await fetch("https://api.chucknorris.io/jokes/random");
       if (!response.ok) {
-        console.error(`[MCP TOOL] No fact available for ${number}. Response status: ${response.status}`);
         return {
-          content: [{ type: "text", text: `No fact available for ${number}.` }],
+          content: [{ type: "text", text: `No joke available at the moment.` }],
         };
       }
-      const fact = await response.text();
-      console.error(`[MCP TOOL] Fact fetched for ${number}: ${fact}`);
-      return { content: [{ type: "text", text: fact }] };
+      const data = await response.json();
+      return { content: [{ type: "text", text: data.value }] };
     } catch (err) {
       const message = err instanceof Error ? err.message : "An unknown error occurred";
-      console.error(`[MCP TOOL] Error fetching fact for ${number}: ${message}`);
-      return {
-        content: [{ type: "text", text: `Error fetching fact: ${message}` }],
-      };
+      return { content: [{ type: "text", text: `Error fetching joke: ${message}` }] };
     }
   }
 );
 
-// Optional prompt for summarizing facts
-server.prompt(
-  "summarize-fact",
-  "Summarize a number fact into a short sentence",
+// Tool: Fetch a random joke from a specific category
+server.tool(
+  "get-chuck-joke-category",
+  "Fetch a random Chuck Norris joke from a given category",
   {
-    fact: z.string().describe("The fact to summarize"),
+    category: z.string().describe("The joke category to fetch"),
+  },
+  async ({ category }) => {
+    try {
+      const response = await fetch(`https://api.chucknorris.io/jokes/random?category=${category}`);
+      if (!response.ok) {
+        return {
+          content: [{ type: "text", text: `No joke available for category "${category}".` }],
+        };
+      }
+      const data = await response.json();
+      return { content: [{ type: "text", text: data.value }] };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An unknown error occurred";
+      return { content: [{ type: "text", text: `Error fetching joke: ${message}` }] };
+    }
+  }
+);
+
+// Tool: List available joke categories
+server.tool(
+  "list-joke-categories",
+  "Get a list of available Chuck Norris joke categories",
+  {},
+  async () => {
+    try {
+      const response = await fetch("https://api.chucknorris.io/jokes/categories");
+      if (!response.ok) {
+        return {
+          content: [{ type: "text", text: `Could not fetch categories.` }],
+        };
+      }
+      const categories = await response.json();
+      return { content: [{ type: "text", text: categories.join(", ") }] };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "An unknown error occurred";
+      return { content: [{ type: "text", text: `Error fetching categories: ${message}` }] };
+    }
+  }
+);
+
+// Prompt: Summarize a joke
+server.prompt(
+  "summarize-joke",
+  "Summarize a Chuck Norris joke into a short sentence",
+  {
+    joke: z.string().describe("The joke to summarize"),
   },
   async (args) => {
-    const fact = args.fact || "";
-    console.error(`[MCP PROMPT] summarize-fact called with fact: ${fact}`);
+    const joke = args.joke || "";
     return {
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: {
-            type: "text",
-            text: `You can use the get-number-fact tool to fetch a fact about a number. Here is a fact to summarize:\n"${fact}"`,
-          },
-        },
-      ],
+            type: 'text',
+            text: `You can use the get-chuck-joke or get-chuck-joke-category tools to fetch jokes. Here is a joke to summarize:\n"${joke}"`
+          }
+        }
+      ]
     };
   }
 );
 
 // Register documentation resource
-server.resource("examples", "examples://numbers", async (uri) => ({
+server.resource("examples", "examples://chuck-norris", async (uri) => ({
   contents: [
     {
       uri: uri.href,
-      text: `# Numbers MCP Server Examples
-This server provides tools and prompts for working with numbers. Details...
+      text: `
+# Chuck Norris MCP Server Examples
+
+## Tools
+
+- **get-chuck-joke()**: Fetch a random joke.
+- **get-chuck-joke-category({ category })**: Fetch a random joke from a category.
+- **list-joke-categories()**: List all available joke categories.
+
+## Prompt
+
+- **summarize-joke({ joke })**: Summarize a joke into a shorter sentence.
+
+## Examples
+
+\`\`\`
+get-chuck-joke()
+\`\`\`
+
+\`\`\`
+list-joke-categories()
+\`\`\`
+
+\`\`\`
+get-chuck-joke-category({ category: "science" })
+\`\`\`
+
+\`\`\`
+summarize-joke({ joke: "Chuck Norris counted to infinity. Twice." })
+\`\`\`
       `,
     },
   ],
 }));
 
-// Start the server
+// Start server
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("[MCP SERVER] Numbers MCP Server running on stdio");
+  console.error("Chuck Norris MCP Server running on stdio");
 }
 
 main().catch((error) => {
-  console.error("[MCP SERVER] Fatal error in main():", error);
+  console.error("Fatal error in main():", error);
   process.exit(1);
 });
