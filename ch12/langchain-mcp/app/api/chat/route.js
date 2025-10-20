@@ -26,7 +26,7 @@ async function createMCPClient() {
   const client = new MultiServerMCPClient({
     useStandardContentBlocks: true,
     mcpServers: {
-      numbers: {
+      norris: {
         transport: "stdio",
         command: "node",
         args: ["app/stdio/server.js"],
