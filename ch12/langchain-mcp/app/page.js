@@ -42,7 +42,7 @@ export default function ChatPage() {
       <div className="flex-1 overflow-y-auto border border-gray-300 rounded-lg p-4 space-y-4 bg-gray-50">
         {messages.length === 0 && (
           <div className="text-center text-gray-500 py-8">
-            "Enter a number to learn something interesting about it."
+            "Ask for a Chuck Norris Fact or Joke!"
           </div>
         )}
 
@@ -101,7 +101,7 @@ export default function ChatPage() {
           className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask for a number fact..."
+          placeholder="Ask for a Chuck Norris joke or question..."
           disabled={isLoading}
         />
         <button

@@ -56,17 +56,10 @@ async function invokeAgent(agent, humanMessage) {
   return result.messages.filter((m) => m.type !== "HumanMessage" && m.type !== "ToolMessage").pop();
 }
 
-function streamMessages(normalizedMessage, aiMessage) {
+function streamMessages(aiMessage) {
   return createUIMessageStream({
     execute: async ({ writer }) => {
-      const userId = generateUniqueId();
-      console.log("[STREAM] User message:", userId, normalizedMessage);
-      writer.write({
-        type: "data-norris-fact",
-        data: { content: normalizedMessage },
-        id: userId,
-      });
-
+      
       if (!aiMessage) {
         console.log("[STREAM] No AI message returned.");
         return;
@@ -81,7 +74,7 @@ function streamMessages(normalizedMessage, aiMessage) {
           .filter(Boolean)
           .join(" ");
       }
-
+      
       const aiId = generateUniqueId();
       console.log("[STREAM] AI message:", aiId, aiContent);
       writer.write({
@@ -128,7 +121,8 @@ export async function POST(req) {
 
     await client.close();
 
-    const uiStream = streamMessages(normalizedMessage, aiMessage);
+    // Pass only the AI message to the stream function
+    const uiStream = streamMessages(aiMessage);
     return createUIMessageStreamResponse({ stream: uiStream });
   } catch (err) {
     console.error("[ERROR] /api/chat failed:", err);
