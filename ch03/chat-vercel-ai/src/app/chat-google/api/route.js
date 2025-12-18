@@ -22,7 +22,7 @@ export async function POST(req) {
   });
   const message = {
     id: uuidv4(),
-    role: result.responseMessages[0].role,
+    role: 'assistant',
     content: result.text, // Extract content from message
   };
   return Response.json({ message });

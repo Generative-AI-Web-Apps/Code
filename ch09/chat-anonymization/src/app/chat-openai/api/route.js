@@ -6,7 +6,6 @@ import { Redis } from '@upstash/redis';
 import { auth } from '@clerk/nextjs/server';
 import  { SyncRedactor } from 'redact-pii';
 
-
 export const dynamic = 'force-dynamic';
 
 const model = createOpenAI({
@@ -74,7 +73,7 @@ export async function POST(req) {
     
     const message = {
       id: uuidv4(),
-      role: result.response.messages[0].role,
+      role: 'assistant',
       content: result.text,
     };
 

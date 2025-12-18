@@ -58,7 +58,7 @@ export default clerkMiddleware(async (auth, req) => {
   if (corsResponse instanceof NextResponse) {
     return corsResponse;
   }
-  const rateLimitResponse = rateLimit(req);
+  const rateLimitResponse = await rateLimit(req);
   if (rateLimitResponse instanceof NextResponse) {
     return rateLimitResponse;
   }
