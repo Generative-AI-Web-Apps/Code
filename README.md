@@ -1,2 +1,2 @@
 # Code
-Code Repository for the Generative AI Web Apps book
+Code Repository for the Building AI into your Web Apps book
